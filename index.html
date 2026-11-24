@@ -1297,6 +1297,9 @@ function layout() {
     halfW = Math.max(halfW, Math.abs(it.home.x - c.x) + r); halfH = Math.max(halfH, Math.abs(it.home.y - c.y) + r);
   }
   home.z = Math.max(halfH / tanH(), halfW / (tanH() * camera.aspect)) + 1.2;
+  // phones: come ~20% closer (objects read bigger; the sides and the bag crop a little), zooming about a point a bit
+  // above the middle so the top objects don't slide up under the header
+  if (portrait) { const z0 = home.z; home.z *= .84; home.center.y += (z0 - home.z) * tanH() * .18; }
 }
 addEventListener('resize', layout); layout();
 camera.position.set(home.center.x, home.center.y, home.z + 4);
