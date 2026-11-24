@@ -1421,7 +1421,7 @@ function focus(it, instant) {
   document.getElementById('f-title').textContent = it.label;   // only your label (CV, My work, Contact me…), not the object's name
   document.getElementById('f-desc').textContent = it.desc;
   document.getElementById('f-hint').textContent = it.hint;
-  document.getElementById('f-credit').innerHTML = creditHTML(it.id);
+  document.getElementById('f-credit').innerHTML = '';   // credits live only in the bag's contents list
   if (it === usb) { workSeen = true; try { localStorage.setItem('pf-work-seen', '1'); } catch (e) {} }
   extra.innerHTML = it.extra ? it.extra() : ''; it.wire?.(extra);
   ui.classList.toggle('side', !!(it.panel || it.sideCap));
