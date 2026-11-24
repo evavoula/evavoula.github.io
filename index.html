@@ -204,6 +204,15 @@
     .file img { max-width:100%; max-height:100%; border-width:4px; }
     .file svg { width:80%; height:80%; }
   }
+  /* "more below" cue: soft fade over the last row + a small bouncing pill, shown only while there is more to scroll */
+  .files-wrap { flex:1; min-height:0; position:relative; display:flex; }
+  .files-wrap .files { flex:1; }
+  .more { position:absolute; left:0; right:0; bottom:0; height:70px; pointer-events:none; display:flex; align-items:flex-end; justify-content:center; padding-bottom:10px;
+    background:linear-gradient(to bottom, rgba(253,248,244,0), #fdf8f4 85%); opacity:0; transition:opacity .3s; }
+  .more.on { opacity:1; }
+  .more span { pointer-events:auto; cursor:pointer; font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:#fff6f9; background:#7a2d63; border-radius:99px; padding:6px 13px; box-shadow:0 4px 14px rgba(75,29,63,.3); animation:nudge 1.6s ease-in-out infinite; }
+  @keyframes nudge { 0%,100% { transform:translateY(0); } 50% { transform:translateY(4px); } }
+  @media (prefers-reduced-motion: reduce) { .more span { animation:none; } }
   .status { padding:7px 12px; font-size:10px; color:#6c5360; border-top:1px solid rgba(75,29,63,.12); display:flex; justify-content:space-between; }
   .win.preview { inset:6% 4% 6% 10%; display:none; z-index:2; }
   .win.preview.on { display:flex; animation:pop .35s cubic-bezier(.2,.8,.2,1); }
@@ -960,7 +969,7 @@ function desktopHTML() {
   return `<div class="win main" role="region" aria-label="USB drive VOULA_E — projects">
     <div class="bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="ttl">VOULA_E (E:)</span><button data-a="eject" title="Eject" aria-label="Eject — close">⏏</button></div>
     <div class="path"><button data-a="back" title="Back" aria-label="Back">‹</button><span class="where">E:\\</span></div>
-    <div class="files"></div>
+    <div class="files-wrap"><div class="files"></div><div class="more" aria-hidden="true"><span>scroll for more ↓</span></div></div>
     <div class="status"><span class="count"></span><span>click to open</span></div>
   </div>
   <div class="win preview" role="dialog" aria-label="Project preview"><div class="bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="ttl pv-name"></span><button data-a="pclose" title="Close" aria-label="Close"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div><div class="pv"></div></div>`;
@@ -973,6 +982,12 @@ function renderFiles(el) {
   el.querySelector('.files').innerHTML = list.map((f, i) => f.folder
     ? `<button class="file" data-folder="${esc(f.folder)}"><span class="ic">${FOLDER_SVG}</span><span>${esc(f.folder)}</span></button>`
     : `<button class="file" data-img="${esc(f.img)}"><span class="ic"><img src="thumbs/${esc(f.img)}.jpg" alt="" loading="lazy"></span><span>${esc(f.name)}</span></button>`).join('');
+  el.querySelector('.files').scrollTop = 0; updateMore(el);
+}
+// show the "scroll for more" cue while the file list overflows and hasn't been scrolled near the end
+function updateMore(el) {
+  const fl = el.querySelector('.files'), m = el.querySelector('.more'); if (!fl || !m) return;
+  m.classList.toggle('on', fl.scrollHeight - fl.clientHeight - fl.scrollTop > 24);
 }
 function openFile(el, img) {
   const f = allFiles().find(x => x.img === img); if (!f) return;
@@ -985,6 +1000,11 @@ function openFile(el, img) {
 }
 function wireDesktop(el) {
   renderFiles(el);
+  const fl = el.querySelector('.files');
+  fl.addEventListener('scroll', () => updateMore(el), { passive: true });
+  fl.addEventListener('load', () => updateMore(el), true);   // thumbnails arriving change the height
+  setTimeout(() => updateMore(el), 800);                      // after the window slides in
+  el.querySelector('.more span').addEventListener('click', () => fl.scrollBy({ top: fl.clientHeight * .7, behavior: 'smooth' }));
   el.addEventListener('click', e => {
     const a = e.target.closest('[data-a]')?.dataset.a;
     if (a === 'back') { deskPath = null; renderFiles(el); sfx('click'); return; }
