@@ -230,7 +230,15 @@
     .pv { grid-template-columns:1fr; }
     .win.preview { inset:0; }
   }
-  @media (max-width:600px) { #hint { bottom:46px; } .name { font-size:24px; } .cap .desc { font-size:16px; } header { padding:14px 16px; } .chip { padding:7px 10px; } .note { font-size:23px; padding:24px; } }
+  /* phones: a calm header — name + one short line on the left, compact buttons on the right, nothing wraps */
+  @media (max-width:600px) {
+    .name small { font-size:8.5px; letter-spacing:.16em; margin-top:5px; white-space:nowrap; }
+    .name small .pre { display:none; }
+    .chips { gap:6px; }
+    .chip.icon { width:32px; height:30px; } .chip.icon svg { width:16px; height:16px; }
+    #now.on { display:none; }
+  }
+  @media (max-width:600px) { #hint { bottom:46px; } .name { font-size:24px; } .cap .desc { font-size:16px; } header { padding:14px 16px; align-items:center; } .chip { padding:7px 10px; } .note { font-size:23px; padding:24px; } }
 </style>
 <script type="importmap">
   { "imports": {
@@ -261,7 +269,7 @@
 <div id="vignette"></div>
 
 <header>
-  <div class="name">Voula Evangelia<small id="tagline">Portfolio — Designer &amp; digital artist</small></div>
+  <div class="name">Voula Evangelia<small id="tagline"><span class="pre">Portfolio — </span>Designer &amp; digital artist</small></div>
   <div class="chips">
     <button class="chip" id="now">♫ —</button>
     <button class="chip" id="work-btn" title="Open my work">my work</button>
@@ -1159,9 +1167,6 @@ function buildID() {
       const ink = '#16243d';
       x.fillStyle = ink; x.font = '700 16.5px Arial'; x.fillText('ΔΕΛΤΙΟ ΤΑΥΤΟΤΗΤΑΣ', 70, 30); x.fillText('IDENTITY CARD', 70, 48);
       x.fillText('ΕΛΛΗΝΙΚΗ ΔΗΜΟΚΡΑΤΙΑ', 290, 30); x.fillText('HELLENIC REPUBLIC', 290, 48);
-      x.fillStyle = '#2e9b57'; x.fillRect(538, 22, 22, 22); x.fillStyle = '#d6334a'; x.fillRect(560, 22, 22, 22);
-      x.fillStyle = '#fff'; x.beginPath(); x.arc(560, 33, 7, 0, Math.PI * 2); x.fill();
-      x.fillStyle = ink; x.font = '15px Arial'; x.fillText(ID_DATA.number, 592, 39);
       // photo (laser-engraved look)
       x.fillStyle = '#d7dee8'; x.fillRect(48, 95, 184, 275);
       if (img) {
@@ -1619,7 +1624,7 @@ function openProject(img) {
 }
 
 /* header */
-document.getElementById('tagline').textContent = 'Portfolio — ' + PROFILE.role;
+document.getElementById('tagline').innerHTML = '<span class="pre">Portfolio — </span>' + esc(PROFILE.role);
 document.getElementById('work-btn').onclick = () => focus(usb);
 
 /* loading: reveal the scene only once every model has arrived */
