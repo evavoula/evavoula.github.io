@@ -238,6 +238,9 @@
     .chip.icon { width:32px; height:30px; } .chip.icon svg { width:16px; height:16px; }
     #now.on { display:none; }
   }
+  /* touch screens: the object's name sits at the bottom centre (not under the finger / over the title); no "you picked up" line */
+  body.touch #tip { left:50% !important; top:auto !important; bottom:84px; transform:translateX(-50%); }
+  @media (hover:none), (max-width:600px) { #focus-ui .top { display:none; } }
   @media (max-width:600px) { #hint { bottom:46px; } .name { font-size:24px; } .cap .desc { font-size:16px; } header { padding:14px 16px; align-items:center; } .chip { padding:7px 10px; } .note { font-size:23px; padding:24px; } }
 </style>
 <script type="importmap">
@@ -1312,6 +1315,14 @@ fx.addEventListener('pointerdown', e => {
     }
   }
 });
+// Touch has no hover: remember it, and let the "hover" (pink glow + name) fade out shortly after the finger lifts.
+let isTouch = matchMedia('(hover: none)').matches, touchClear = null;
+document.body.classList.toggle('touch', isTouch);
+const clearTouchHover = (ms = 1400) => { clearTimeout(touchClear); touchClear = setTimeout(() => { if (!press) ndc.set(-9, -9); }, ms); };
+addEventListener('pointerdown', e => {
+  isTouch = e.pointerType === 'touch'; document.body.classList.toggle('touch', isTouch); clearTimeout(touchClear);
+}, true);
+addEventListener('pointerup', e => { if (e.pointerType === 'touch') clearTouchHover(); }, true);
 addEventListener('pointermove', e => {
   setNdc(e); mouse.copy(ndc);
   tip.style.left = e.clientX + 'px'; tip.style.top = e.clientY + 'px';
@@ -1411,6 +1422,7 @@ function focus(it, instant) {
 function unfocus(silent) {
   if (!focused) return;
   focused.onBlur?.(); focused = null;
+  if (isTouch) ndc.set(-9, -9);   // on phones, don't "hover" whatever is under the last tap after closing
   clearTimeout(sideTimer); side.classList.remove('on');
   stageEl.classList.remove('dim'); ui.classList.remove('on'); hint.style.opacity = 1;
   if (lastTrigger) { lastTrigger.focus(); lastTrigger = null; }   // keyboard users land back where they were
@@ -1435,7 +1447,8 @@ function frame(_, fakeDt) {
     else if (!bagOpen) { const p = pick(pickables); if (p) { h = p.item; cur = 'grab'; } }
     if (h !== hovered) {
       hovered = h;
-      tip.style.opacity = h && h.label ? 1 : 0; if (h?.label) tip.textContent = h.label;
+      const showTip = h && h.label && !(isTouch && h.toggle);   // phones: the glasses only show the centred light/dark toast
+      tip.style.opacity = showTip ? 1 : 0; if (showTip) tip.textContent = h.label;
       if (h?.focusable && t - lastHoverSfx > .25) { sfx('hover'); lastHoverSfx = t; }
     }
     fx.style.cursor = cur;
