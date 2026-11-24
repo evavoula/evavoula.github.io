@@ -728,7 +728,7 @@ mainR.shadowMap.enabled = SHADOWS; mainR.shadowMap.type = THREE.VSMShadowMap;   
 }
 
 /* ---------- bag */
-const bag = makeItem({ id: 'bag', label: 'contents', focusable: false, mass: 2.8, delay: 0, pos: [-4.7, -2.4, -.6], posP: [-.6, -7.2, -.6], rot: [-.1, .3, -.7] });   // opening (top) turned towards the objects, tipped slightly away from the viewer
+const bag = makeItem({ id: 'bag', label: 'contents', focusable: false, mass: 2.8, delay: 0, pos: [-4.7, -2.4, -.6], posP: [-.6, -6.35, -.6], rot: [-.1, .3, -.7] });   // opening (top) turned towards the objects, tipped slightly away from the viewer
 loadModel('models/bag.glb', bag, 32 * CM);
 
 /* ---------- business card */
@@ -871,7 +871,7 @@ loadModel('models/pen.glb', pen, 13.1 * CM);
 
 /* ---------- USB stick → a little computer full of projects */
 const usb = makeItem({
-  id: 'usb', label: 'My work', pos: [0, -.2, 1.0], posP: [.3, -1.35, 1.8], rot: [1.0, .5, .9], delay: 1.1,   // phone: in front of everything, a little below the glasses
+  id: 'usb', label: 'My work', pos: [0, -.2, 1.0], posP: [.55, -.85, 1.8], rot: [1.0, .5, .9], delay: 1.1,   // phone: in front of everything, a little below the glasses
   showScale: 1.85, showRot: [Math.PI / 2, 0, -.5], showLift: .1, showX: -.3,
   kicker: 'work', title: 'USB stick', desc: 'Everything I’ve made lives on here. Plug in and have a look.', hint: 'click a file to open it ✦ esc to unplug',
   cap: null, capDir: V(), capOpen: 0,
@@ -1109,7 +1109,7 @@ function buildReceipt() {
   return { body, curl, H, roll: 1, lastRoll: 1 };
 }
 const receipt = makeItem(Object.assign(buildReceipt(), {
-  id: 'receipt', label: 'CV', frameR: 1.4, pos: [3.4, -2.0, .2], posP: [-1.3, -1.9, .2], rot: [.15, -.3, -.35], delay: 1.3,
+  id: 'receipt', label: 'CV', frameR: 1.4, pos: [3.4, -2.0, .2], posP: [-1.3, -2.15, .2], rot: [.15, -.3, -.35], delay: 1.3,
   showScale: 3.6, showLift: 0, scrollY: 0, sideCap: true, still: true, scale: 8 * CM / .8,
   kicker: 'receipt', title: 'CV', desc: '', hint: 'scroll or drag to read ✦ esc to put it back',
   range() { const viewH = 2 * tanH() * SHOW_D; return Math.max(0, (this.H * this.showScale * fitK() - viewH * .78) / 2); },
