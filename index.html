@@ -206,7 +206,7 @@
   }
   /* "more below" cue: soft fade over the last row + a small bouncing pill, shown only while there is more to scroll */
   .files-wrap { flex:1; min-height:0; position:relative; display:flex; }
-  .files-wrap .files { flex:1; }
+  .files-wrap .files, .files-wrap > ul { flex:1; min-width:0; }
   .more { position:absolute; left:0; right:0; bottom:0; height:70px; pointer-events:none; display:flex; align-items:flex-end; justify-content:center; padding-bottom:10px;
     background:linear-gradient(to bottom, rgba(253,248,244,0), #fdf8f4 85%); opacity:0; transition:opacity .3s; }
   .more.on { opacity:1; }
@@ -1587,8 +1587,12 @@ function openBag() {
   if (focused) unfocus(true);
   bagPanel.innerHTML = `<div class="win"><div class="bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="ttl">CONTENTS</span>
       <button data-a="bclose" title="Close" aria-label="Close"><svg viewBox="0 0 14 14" aria-hidden="true" style="width:11px;height:11px"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>
-    <ul>${BAG_LIST.map(bagRow).join('')}</ul></div>`;
+    <div class="files-wrap"><ul>${BAG_LIST.map(bagRow).join('')}</ul><div class="more" aria-hidden="true"><span>scroll for more ↓</span></div></div></div>`;
   bagPanel.classList.add('on'); bagOpen = true;
+  const ul = bagPanel.querySelector('ul'), more = bagPanel.querySelector('.more');
+  const upd = () => more.classList.toggle('on', ul.scrollHeight - ul.clientHeight - ul.scrollTop > 24);
+  ul.addEventListener('scroll', upd, { passive: true }); setTimeout(upd, 100); setTimeout(upd, 700);
+  more.querySelector('span').addEventListener('click', () => ul.scrollBy({ top: ul.clientHeight * .7, behavior: 'smooth' }));
   stageEl.classList.add('dim'); hint.style.opacity = 0; tip.style.opacity = 0; sfx('open');
   bagPanel.querySelector('[data-open]')?.focus({ preventScroll: true });
 }
