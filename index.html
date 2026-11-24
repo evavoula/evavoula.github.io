@@ -785,7 +785,7 @@ const card = makeItem(Object.assign(buildCard(), flipper, {
 /* ---------- walkman (music player) */
 const walkman = makeItem({
   id: 'walkman', label: 'Soundtrack', frameR: 2.1, pos: [1.9, 1.5, -.2], posP: [1.2, 2.7, -.2], rot: [1.25, -.35, .25], delay: .7,
-  showScale: .85, showRot: [Math.PI / 2, 0, 0], showLift: .7,
+  showScale: .85, mobK: 1.35, showRot: [Math.PI / 2, 0, 0], showLift: .7,
   kicker: 'soundtrack', title: 'Walkman', desc: 'Pick the soundtrack for your visit — or turn it off.', hint: 'drag to turn ✦ space = play / pause',
   extra() {
     return `<div class="player">
@@ -813,7 +813,7 @@ loadModel('models/walkman.glb', walkman, 11.5 * CM, null, /walkman/i);   // size
 const fmt = (d, tz) => new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: tz }).format(d);
 const watch = makeItem({
   id: 'watch', label: 'Time', frameR: 1.9, pos: [4.6, .6, -.3], posP: [2.25, -2.46, -.4], rot: [1.42, .6, .15], rotP: [1.42, .15, .15], frameRP: 1.15, delay: .9,   // phone: lower right, strap upright   // dial turned towards the viewer, strap on a diagonal
-  showScale: 2.4, showRot: [Math.PI / 2, 0, 0], showLift: .5,   // close-up on the dial; straps run off-screen
+  showScale: 2.4, mobK: .72, showRot: [Math.PI / 2, 0, 0], showLift: .5,   // close-up on the dial; straps run off-screen
   faceCenter: null, sideCap: true,
   kicker: 'time', title: '', desc: '', hint: 'drag to turn',
   lcd: null, lastMin: '',
@@ -1274,7 +1274,8 @@ decoGeo.forEach(([g, c, s], i) => {
 /* ================================================================ layout / camera */
 let portrait = false; const home = { center: V(), z: 14 }, SHOW_D = 6;
 const tanH = () => Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-const fitK = () => Math.min(1, camera.aspect / 1.45);
+// shrink picked-up objects on narrow screens so they fit — but phones get them noticeably closer (bigger) than a pure width fit
+const fitK = () => Math.min(1, camera.aspect / 1.45) * (camera.aspect < .9 ? 1.5 : 1);
 function layout() {
   const w = innerWidth, h = innerHeight;
   camera.aspect = w / h; camera.updateProjectionMatrix(); portrait = camera.aspect < .9;
@@ -1535,7 +1536,7 @@ function frame(_, fakeDt) {
       const sway = it.still ? 0 : 1;   // reading items stay perfectly still
       e2.set(it.showRot[0] + it.spin.x + Math.sin(t * .5) * .04 * sway, it.showRot[1] + it.spin.y + Math.sin(t * .4) * .07 * sway, it.showRot[2]);
       qb.copy(camera.quaternion).multiply(q2.setFromEuler(e2));
-      pos.lerp(sp, w); qa.slerp(qb, w); s = THREE.MathUtils.lerp(s, it.showScale * fitK() * (portrait && it.panel ? .7 : 1), w);
+      pos.lerp(sp, w); qa.slerp(qb, w); s = THREE.MathUtils.lerp(s, it.showScale * fitK() * (portrait ? (it.panel ? .7 : 1) * (it.mobK ?? 1) : 1), w);
     }
     it.group.position.copy(pos); it.group.quaternion.copy(qa); it.group.scale.setScalar(s);
     setLayer(it, it === focused || it.focusW > .01 ? 1 : 0);
