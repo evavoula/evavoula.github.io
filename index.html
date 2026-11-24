@@ -1,0 +1,1651 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Voula Evangelia — portfolio</title>
+<meta name="description" content="Portfolio of Voula Evangelia, designer & digital artist working at the intersection of space, image and technology — graphic design, posters, identity, motion and 3D.">
+<meta property="og:title" content="Voula Evangelia — portfolio">
+<meta property="og:description" content="Designer & digital artist working at the intersection of space, image and technology.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f9c3d9">
+<script>/* apply the saved light/dark choice before anything paints (no flash) */
+  try { if (localStorage.getItem('pf-theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
+  /* back from a project page: the loading screen (turning ✦) shows, then the USB stick reopens */
+  try { if (sessionStorage.getItem('pf-return') && sessionStorage.getItem('pf-morph')) document.documentElement.classList.add('returning'); } catch (e) {}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#2a1f24; --muted:#6c5360; --accent:#d4447c; --cream:#fff6f2; --aub:#4b1d3f; --aub2:#7d3567;
+    --g1:#ffe3d8; --g2:#f9c3d9; --g3:#d9c8ff; --g4:#fbe9f2;
+    --serif:"Cormorant Garamond", Georgia, serif; --sans:"Plus Jakarta Sans", system-ui, sans-serif; --mono:"DM Mono", ui-monospace, monospace; --hand:Caveat, cursive;
+    --chip-bg:rgba(255,246,242,.55); --chip-bd:rgba(42,31,36,.18); --chip-hover:rgba(255,255,255,.85); --tip-bg:rgba(255,246,242,.8);
+  }
+  /* dark mode — switched by the glasses */
+  :root[data-theme="dark"] {
+    --ink:#f5e8ee; --muted:#c3abb8; --accent:#ff8ab6; --cream:#1c1420; --g4:#1a1220;
+    --chip-bg:rgba(40,24,36,.6); --chip-bd:rgba(255,230,240,.2); --chip-hover:rgba(74,46,64,.9); --tip-bg:rgba(36,22,32,.88);
+  }
+  #bg-dark { position:absolute; inset:0; opacity:0; transition:opacity 1.1s ease;
+    background:
+      radial-gradient(60% 50% at 70% 30%, rgba(255,140,190,.16), rgba(255,140,190,0) 70%),
+      radial-gradient(50% 60% at 15% 85%, rgba(150,120,255,.2), rgba(150,120,255,0) 70%),
+      linear-gradient(135deg, #26141f 0%, #2b1830 50%, #171430 100%); }
+  :root[data-theme="dark"] #bg-dark { opacity:1; }
+  :root[data-theme="dark"] #vignette { background:radial-gradient(ellipse at 50% 45%, transparent 50%, rgba(0,0,0,.45) 100%); }
+  :root[data-theme="dark"] #veil { background:#141215; }
+  html, body, header, #hint { transition:color .8s ease, background-color .8s ease; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; overflow:hidden; color:var(--ink); background:var(--g4); font-family:var(--sans); -webkit-font-smoothing:antialiased; }
+  button { font-family:inherit; color:inherit; }
+
+  /* layers */
+  #stage { position:fixed; inset:0; transition:filter .9s ease, transform .9s ease; }
+  #stage.dim { filter:blur(9px) brightness(.5) saturate(.85); transform:scale(1.03); }
+  #bg { position:absolute; inset:0;
+    background:
+      radial-gradient(60% 50% at 70% 30%, rgba(255,255,255,.75), rgba(255,255,255,0) 70%),
+      radial-gradient(50% 60% at 15% 85%, rgba(217,200,255,.9), rgba(217,200,255,0) 70%),
+      linear-gradient(135deg, var(--g1) 0%, var(--g2) 45%, var(--g3) 100%); }
+  canvas.gl { position:fixed; inset:0; width:100%; height:100%; display:block; }
+  #fx { z-index:2; touch-action:none; }
+  #vignette { display:none; position:fixed; inset:0; z-index:3; pointer-events:none; background:radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(90,40,70,.25) 100%); }
+  #veil { position:fixed; inset:0; z-index:30; background:#f2f0ed; transition:opacity 2s ease; pointer-events:none; }
+  #veil.gone { opacity:0; }
+
+  /* chrome */
+  header { position:fixed; z-index:6; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:flex-start; padding:20px 24px; pointer-events:none; }
+  .name { font-family:var(--serif); font-style:italic; font-weight:500; font-size:36px; line-height:1; letter-spacing:-.01em; }
+  .name small { display:block; font-family:var(--sans); font-style:normal; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-top:8px; }
+  .chips { display:flex; gap:8px; pointer-events:auto; }
+  .chip { font-size:10px; letter-spacing:.14em; text-transform:uppercase; padding:8px 12px; border-radius:99px; border:1px solid var(--chip-bd);
+    background:var(--chip-bg); color:var(--ink); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); cursor:pointer; white-space:nowrap; transition:background-color .8s, color .8s, border-color .8s; }
+  .chip:hover { background:var(--chip-hover); }
+  .chip.icon { padding:0; width:36px; height:32px; display:flex; align-items:center; justify-content:center; }
+  .chip.icon svg { width:18px; height:18px; }
+  #now { display:none; } #now.on { display:inline-block; }
+  /* volume: a small vertical slider that drops out of the speaker on hover / keyboard focus */
+  .vol-wrap { position:relative; display:inline-flex; }
+  .vol-pop { position:absolute; top:100%; left:50%; padding-top:8px; transform:translateX(-50%) translateY(-4px); opacity:0; visibility:hidden; pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease, visibility 0s .25s; }
+  .vol-wrap:hover .vol-pop, .vol-wrap:focus-within .vol-pop { opacity:1; visibility:visible; pointer-events:auto; transform:translateX(-50%); transition:opacity .25s ease, transform .25s ease, visibility 0s; }
+  .vol-pop::before { content:""; position:absolute; left:50%; top:8px; bottom:0; width:36px; transform:translateX(-50%); border-radius:99px; background:var(--chip-bg); border:1px solid var(--chip-bd); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+  /* minimal: a thin line, no knob; filled in the opposite theme's ground colour (dark on light, light on dark) */
+  .vol-pop .track { position:relative; display:block; width:36px; height:118px; }
+  /* the drawn line: a rounded 5px bar, filled from the bottom with a rounded end; the real (invisible) slider sits on top for a comfy hit area */
+  .vol-pop .track { --v:80%; --fill:#141215; --rest:rgba(20,18,21,.16); }
+  :root[data-theme="dark"] .vol-pop .track { --fill:#f2f0ed; --rest:rgba(242,240,237,.2); }
+  .vol-pop .vol-line { position:absolute; padding:0; display:block; left:50%; top:11px; bottom:11px; width:5px; transform:translateX(-50%); border-radius:99px; background:var(--rest); overflow:hidden; pointer-events:none; }
+  .vol-pop .vol-line i { position:absolute; left:0; right:0; bottom:0; height:var(--v); min-height:0; border-radius:99px; background:var(--fill); }
+  #vol { position:absolute; left:50%; top:50%; width:96px; height:28px; margin:0; transform:translate(-50%,-50%) rotate(-90deg);
+    -webkit-appearance:none; appearance:none; background:transparent; cursor:pointer; opacity:0; }
+  .vol-pop .track:has(#vol:focus-visible) .vol-line { outline:2px solid var(--accent); outline-offset:3px; }
+  @media (hover: none) { .vol-pop { display:none; } }   /* phones: the speaker just mutes / unmutes */
+  /* small credit line at the very bottom of an opened item, and a toast for the bag's credit */
+  #f-credit { position:absolute; right:24px; bottom:8px; max-width:min(520px, calc(100vw - 48px)); text-align:right; font-size:9.5px; letter-spacing:.08em; opacity:.6; pointer-events:auto; }
+  #f-credit a, #toast a { color:inherit; }
+  #toast { position:fixed; z-index:9; left:50%; bottom:56px; transform:translate(-50%, 10px); background:rgba(42,31,36,.88); color:#fff6f9; font-size:11px; letter-spacing:.04em;
+    padding:9px 14px; border-radius:99px; opacity:0; pointer-events:none; transition:opacity .3s, transform .3s; white-space:nowrap; max-width:calc(100vw - 32px); overflow:hidden; text-overflow:ellipsis; }
+  #toast.on { opacity:1; transform:translate(-50%, 0); pointer-events:auto; }
+  .act { display:inline-flex; gap:8px; flex-wrap:wrap; margin-top:4px; }
+  .act button, .act a { border:1px solid rgba(255,246,249,.45); background:rgba(255,246,249,.12); border-radius:99px; padding:9px 14px; cursor:pointer; font-size:11px; color:#fff6f9; letter-spacing:.08em; text-decoration:none; font-family:var(--sans); }
+  .act button:hover, .act a:hover { background:rgba(255,246,249,.3); }
+  #loader { position:fixed; inset:0; z-index:31; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; pointer-events:none; transition:opacity .8s ease; }
+  #loader.gone { opacity:0; }
+  /* page change: the USB window itself grows to fill the screen and takes the project page's colour; the page then fades in on it */
+  @view-transition { navigation:auto; }
+  #morph { position:fixed; z-index:40; inset:0; display:none; align-items:center; justify-content:center; pointer-events:none; background:#17101a;
+    font:400 11px/1 "DM Mono",monospace; letter-spacing:.18em; text-transform:lowercase; color:rgba(255,240,246,.78); }
+  #morph.on { display:flex; }
+  /* loading: the site's ✦ turning and breathing, no words. Same mark on the project pages' "back" curtain (view-transition-name keeps it in place across the page change) */
+  #loader .t { width:26px; height:26px; color:var(--ink); view-transition-name:moment; }
+  #loader .t svg { display:block; width:100%; height:100%; animation:twinkle 1.6s ease-in-out infinite; }
+  @keyframes twinkle { 0% { transform:rotate(0) scale(.8); opacity:.55; } 50% { transform:rotate(180deg) scale(1.08); opacity:1; } 100% { transform:rotate(360deg) scale(.8); opacity:.55; } }
+  @media (prefers-reduced-motion: reduce) { #loader .t svg { animation:none; } }  /* back from a project: same type as the "opening <file>…" label */
+  #loader .bar, #loader .p { display:none; }   /* no progress bar / percentage, just the star */
+  #loader .bar { width:180px; height:2px; background:rgba(42,31,36,.12); border-radius:2px; overflow:hidden; }
+  #loader .bar i { display:block; height:100%; width:0; background:var(--accent); transition:width .3s ease; }
+  #loader .p { font-size:10px; letter-spacing:.2em; color:var(--muted); }
+  #hint { position:fixed; z-index:6; bottom:22px; left:0; right:0; text-align:center; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); transition:opacity .6s; pointer-events:none; padding:0 16px; }
+  #tip { position:fixed; z-index:9; pointer-events:none; font-family:var(--sans); font-style:normal; font-weight:400; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink); background:var(--tip-bg); padding:7px 13px 7px 15px; border-radius:99px; transform:translate(16px,12px); opacity:0; transition:opacity .2s; white-space:nowrap; }
+
+  /* focus UI */
+  #focus-ui { position:fixed; inset:0; z-index:7; pointer-events:none; opacity:0; visibility:hidden; transition:opacity .6s ease, visibility 0s .6s; color:#fff6f9; }
+  #focus-ui.on { opacity:1; visibility:visible; transition:opacity .6s ease .15s, visibility 0s; }
+
+  /* ---- accessibility: text version + keyboard menu ---- */
+  .sr-only { position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+  #skip { position:fixed; z-index:40; left:16px; top:-60px; background:var(--ink); color:#fff; padding:10px 14px; border-radius:8px; font-size:12px; text-decoration:none; }
+  #skip:focus { top:16px; }
+  /* object menu: invisible until you Tab into it */
+  #kbd-nav { position:fixed; z-index:12; left:50%; top:70px; transform:translateX(-50%); display:flex; flex-wrap:wrap; justify-content:center; gap:6px; width:min(720px, calc(100vw - 32px));
+    clip-path:inset(50%); opacity:0; }
+  #kbd-nav:focus-within { clip-path:none; opacity:1; }
+  #kbd-nav button { border:1px solid var(--chip-bd); background:var(--tip-bg); color:var(--ink); border-radius:99px; padding:8px 12px; font-size:11px; cursor:pointer; letter-spacing:.04em; }
+  /* text version: hidden for sighted mouse users, read by screen readers & search engines, shown as a panel when you Tab into it */
+  #text-version { position:fixed; z-index:35; inset:0; overflow:auto; background:var(--cream); color:var(--ink); padding:56px max(24px, calc(50vw - 360px)) 80px;
+    font-family:var(--sans); font-size:16px; line-height:1.65; clip-path:inset(50%); opacity:0; }
+  #text-version:focus-within, #text-version.open { clip-path:none; opacity:1; }
+  #text-version h1 { font-family:var(--serif); font-style:italic; font-weight:500; font-size:48px; line-height:1.05; margin:0 0 12px; }
+  #text-version h2 { font-family:var(--sans); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin:36px 0 10px; }
+  #text-version h3 { font-family:var(--serif); font-size:24px; margin:16px 0 2px; font-weight:600; }
+  #text-version ul { padding-left:18px; } #text-version li { margin:4px 0; }
+  #text-version .meta { font-family:var(--sans); font-size:12px; color:var(--muted); }
+  #text-version a, #text-version button.link { color:var(--accent); background:none; border:0; padding:0; font:inherit; cursor:pointer; text-decoration:underline; }
+  #tv-close { position:fixed; top:16px; right:16px; font-family:var(--sans); font-size:12px; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } }
+  #focus-ui .top { position:absolute; top:24px; left:0; right:0; text-align:center; font-size:10px; letter-spacing:.3em; text-transform:uppercase; opacity:.8; }
+  #close { position:absolute; top:76px; right:24px; width:42px; height:42px; border-radius:50%; border:1px solid rgba(255,246,249,.5); background:rgba(255,246,249,.12);
+    font-size:20px; cursor:pointer; pointer-events:auto; color:#fff6f9; z-index:2; display:flex; align-items:center; justify-content:center; padding:0; line-height:0; }
+  #close svg, .bar button[data-a=pclose] svg { width:14px; height:14px; display:block; }
+  .cap { position:absolute; left:50%; bottom:28px; transform:translateX(-50%); width:min(600px, calc(100vw - 32px)); text-align:center; }
+  .cap .kicker { display:none; }
+  /* the title is just your label (CV, My work, Contact me…) in the small, minimal caps style */
+  .cap h2 { font-family:var(--sans); font-style:normal; font-weight:400; font-size:11px; line-height:1.4; margin:0 0 12px; letter-spacing:.22em; text-transform:uppercase; color:#ffd6e6; }
+  .cap .time { display:block; font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(40px, 5.6vw, 60px); line-height:1; margin:0 0 8px; font-variant-numeric:tabular-nums; text-shadow:0 2px 30px rgba(212,68,124,.45); }
+  .cap .desc { font-family:var(--sans); font-size:14.5px; line-height:1.6; margin:0 auto 10px; max-width:520px; }
+  .cap .hint2 { font-size:10px; letter-spacing:.16em; text-transform:uppercase; opacity:.7; margin:8px 0 0; }
+  #focus-ui.side .cap { left:28px; bottom:28px; transform:none; text-align:left; width:min(320px, 34vw); }
+  #extra { pointer-events:auto; }
+  .player { display:inline-flex; flex-direction:column; gap:10px; align-items:center; }
+  .player .ctrl { display:flex; gap:8px; }
+  .player button { border:1px solid rgba(255,246,249,.45); background:rgba(255,246,249,.12); border-radius:99px; padding:9px 14px; cursor:pointer; font-size:12px; color:#fff6f9; letter-spacing:.08em; }
+  .player button:hover { background:rgba(255,246,249,.3); }
+  .player ol { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; justify-content:center; gap:6px; }
+  .player li button { font-size:10px; text-transform:uppercase; letter-spacing:.12em; padding:6px 10px; }
+  .player li button.cur { background:#fff6f9; color:var(--accent); }
+
+  /* side panel (USB desktop / pen note) */
+  #side { position:fixed; z-index:8; right:4vw; top:132px; width:min(600px, 54vw); height:calc(100vh - 190px); pointer-events:none; opacity:0; visibility:hidden; transform:translateY(16px) scale(.97);
+    transition:opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1), visibility 0s .5s; }
+  /* the bag's contents: a window listing every object, each one opens from here */
+  #bag-panel { position:fixed; z-index:8; right:4vw; top:132px; width:min(380px, calc(100vw - 24px)); max-height:calc(100vh - 190px); display:flex; pointer-events:none; opacity:0; visibility:hidden;
+    transform:translateY(16px) scale(.97); transition:opacity .35s ease, transform .35s ease, visibility 0s .35s; }
+  #bag-panel.on { opacity:1; visibility:visible; transform:none; pointer-events:auto; transition:opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1), visibility 0s; }
+  #bag-panel .win { position:relative; inset:auto; width:100%; }
+  #bag-panel ul { list-style:none; margin:0; padding:6px; overflow:auto; }
+  #bag-panel li button { all:unset; box-sizing:border-box; width:100%; cursor:pointer; display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:12px 14px; border-radius:8px; }
+  #bag-panel li button:hover, #bag-panel li button:focus-visible { background:rgba(212,68,124,.1); }
+  #bag-panel li b { display:block; font:500 14px/1.3 var(--sans); color:#2a1f24; }
+  #bag-panel li span.lb { display:block; margin-top:3px; font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:#6c5360; }
+  #bag-panel li i { font-style:normal; color:#b9a3ae; font-size:13px; }
+  #bag-panel li .row { display:flex; padding:12px 14px; }
+  #bag-panel li .cr { margin:2px 0 6px; padding:0 14px 8px; font-size:10px; line-height:1.5; color:#8a7280; }   /* each object's credit, right under it */
+  #bag-panel li .cr a { color:inherit; }
+  @media (max-width:820px) { #bag-panel { left:12px; right:12px; top:auto; bottom:12px; width:auto; max-height:62vh; } }
+  #side.on { opacity:1; visibility:visible; transform:none; pointer-events:auto; transition:opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1), visibility 0s; }
+
+  /* the "computer" */
+  .win { position:absolute; background:#fdf8f4; border-radius:12px; box-shadow:0 30px 80px rgba(40,10,30,.45), 0 0 0 1px rgba(75,29,63,.25); overflow:hidden; display:flex; flex-direction:column; color:#2a1f24; }
+  .win.main { inset:0; }
+  .bar { display:flex; align-items:center; gap:10px; padding:9px 12px; background:linear-gradient(90deg,var(--aub),var(--aub2)); color:#ffe9f4; font-size:11px; letter-spacing:.08em; user-select:none; }
+  .bar .dots { display:flex; gap:6px; } .bar .dots i { width:11px; height:11px; border-radius:50%; background:#ffb3cf; display:block; } .bar .dots i:nth-child(2){background:#ffe08a} .bar .dots i:nth-child(3){background:#c8f7a8}
+  .bar .ttl { flex:1; text-align:center; }
+  #bag-panel .bar .ttl { letter-spacing:.18em; font-size:11px; }   /* CONTENTS — spaced caps like the other labels */
+  .bar button { background:none; border:0; color:#ffe9f4; font-size:16px; cursor:pointer; line-height:1; padding:0 4px; display:flex; align-items:center; justify-content:center; }
+  .bar button[data-a=pclose] svg { width:11px; height:11px; }
+  .path { display:flex; align-items:center; gap:8px; padding:8px 12px; border-bottom:1px solid rgba(75,29,63,.12); font-size:11px; color:#6c5360; }
+  .path button { border:1px solid rgba(75,29,63,.2); background:#fff; border-radius:6px; padding:3px 9px; cursor:pointer; font-size:12px; color:#2a1f24; }
+  .path button:disabled { opacity:.35; cursor:default; }
+  .files { flex:1; overflow:auto; padding:16px; display:grid; grid-template-columns:repeat(auto-fill, minmax(104px, 1fr)); gap:14px 10px; align-content:start; }
+  .file { background:none; border:0; border-radius:8px; padding:8px 6px; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:7px; font-size:10.5px; line-height:1.25; text-align:center; word-break:break-all; color:#2a1f24; }
+  .file:hover, .file:focus-visible { background:rgba(212,68,124,.12); outline:none; }
+  .file .ic { width:72px; height:72px; display:flex; align-items:center; justify-content:center; }
+  .file img { max-width:72px; max-height:72px; box-shadow:0 2px 8px rgba(40,10,30,.25); border:3px solid #fff; background:#fff; }
+  .file svg { width:70px; height:58px; }
+  /* big screens: bigger icons, four to a row (a fifth simply starts the next row) */
+  @media (min-width:1100px) and (min-height:640px) {
+    .files { grid-template-columns:repeat(4, minmax(0, 1fr)); gap:26px 14px; padding:26px 24px; }
+    .file { gap:11px; font-size:12px; padding:12px 8px; min-width:0; }
+    .file .ic { width:100%; max-width:168px; height:auto; aspect-ratio:1; }
+    .file img { max-width:100%; max-height:100%; border-width:4px; }
+    .file svg { width:80%; height:80%; }
+  }
+  .status { padding:7px 12px; font-size:10px; color:#6c5360; border-top:1px solid rgba(75,29,63,.12); display:flex; justify-content:space-between; }
+  .win.preview { inset:6% 4% 6% 10%; display:none; z-index:2; }
+  .win.preview.on { display:flex; animation:pop .35s cubic-bezier(.2,.8,.2,1); }
+  @keyframes pop { from { transform:scale(.92); opacity:0; } }
+  .pv { flex:1; overflow:auto; padding:18px 20px; display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:20px; }
+  .pv img { width:100%; border-radius:6px; box-shadow:0 4px 18px rgba(40,10,30,.18); }
+  .pv h3 { font-family:var(--serif); font-style:italic; font-weight:500; font-size:38px; margin:0 0 4px; line-height:1; }
+  .pv .tag { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:#d4447c; margin:0 0 14px; }
+  .pv dl { margin:0; font-size:12px; } .pv dt { font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#6c5360; margin-top:12px; } .pv dd { margin:4px 0 0; font-family:var(--serif); font-size:19px; color:#9a8790; font-style:italic; font-weight:500; }
+
+  /* the pen's note */
+  .note { position:absolute; right:4%; top:4%; width:min(430px, 100%); background:#fffdf7; color:var(--aub); padding:34px 34px 30px; border-radius:3px; rotate:1.5deg;
+    box-shadow:0 24px 60px rgba(40,10,30,.4); font-family:var(--hand); font-size:28px; line-height:1.25;
+    background-image:repeating-linear-gradient(transparent 0 34px, rgba(125,53,103,.14) 34px 35px); background-position:0 26px; }
+  .note h4 { font-family:var(--serif); font-style:italic; font-weight:500; font-size:42px; margin:0 0 10px; color:var(--ink); }
+  .note p { margin:0 0 4px; opacity:0; transform:translateY(4px); }
+  #side.on .note p { animation:write .6s ease forwards; }
+  .note p span { opacity:.65; }
+  @keyframes write { to { opacity:1; transform:none; } }
+
+  @media (max-width:700px), (max-aspect-ratio:9/10) {
+    #side { left:12px; right:12px; top:auto; bottom:12px; width:auto; height:56vh; }
+    #focus-ui.side .cap { display:none; }
+    .pv { grid-template-columns:1fr; }
+    .win.preview { inset:0; }
+  }
+  @media (max-width:600px) { #hint { bottom:46px; } .name { font-size:24px; } .cap .desc { font-size:16px; } header { padding:14px 16px; } .chip { padding:7px 10px; } .note { font-size:23px; padding:24px; } }
+</style>
+<script type="importmap">
+  { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  } }
+</script>
+</head>
+<body>
+<a id="skip" href="#text-version">Skip to text version</a>
+<nav id="kbd-nav" aria-label="Objects in my bag"></nav>
+<main id="text-version" tabindex="-1" aria-label="Text version of the portfolio">
+  <button id="tv-close" class="link" type="button">back to the bag ✕</button>
+  <h1>Voula Evangelia</h1>
+  <p class="meta" id="tv-role">Designer &amp; digital artist</p>
+  <p id="tv-bio"></p>
+  <h2 id="tv-work-h">Work</h2>
+  <ul id="tv-work" aria-labelledby="tv-work-h"></ul>
+  <h2>CV</h2>
+  <div id="tv-cv"></div>
+  <h2>Contact</h2>
+  <p id="tv-contact"></p>
+  <ul id="tv-socials"></ul>
+  <h2>Credits</h2>
+  <ul id="tv-credits"></ul>
+</main>
+<div id="stage" aria-hidden="true"><div id="bg"></div><div id="bg-dark"></div></div>
+<div id="vignette"></div>
+
+<header>
+  <div class="name">Voula Evangelia<small id="tagline">Portfolio — Designer &amp; digital artist</small></div>
+  <div class="chips">
+    <button class="chip" id="now">♫ —</button>
+    <button class="chip" id="work-btn" title="Open my work">my work</button>
+    <button class="chip icon" id="theme-btn" aria-label="Switch to dark mode" title="Dark / light mode"></button>
+    <span class="vol-wrap"><button class="chip icon" id="sound" aria-label="Turn sound on" title="Sound"></button>
+      <span class="vol-pop"><span class="track"><span class="vol-line"><i></i></span><input id="vol" type="range" min="0" max="1" step="0.05" aria-label="Volume"></span></span></span>
+  </div>
+</header>
+<div id="hint">drag things around ✦ click one to pick it up</div>
+<div id="tip"></div>
+<div id="toast" role="status"></div>
+
+<section id="focus-ui" aria-live="polite">
+  <div class="top">✦ you picked up ✦</div>
+  <button id="close" aria-label="Close"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+  <div class="cap">
+    <p class="kicker" id="f-kicker"></p>
+    <h2 id="f-title"></h2>
+    <p class="desc" id="f-desc"></p>
+    <div id="extra"></div>
+    <p class="hint2" id="f-hint"></p>
+  </div>
+  <div id="f-credit"></div>
+</section>
+<div id="side"></div>
+<div id="bag-panel" role="dialog" aria-label="What's in my bag"></div><div id="veil"></div>
+<div id="loader" aria-live="polite"><div class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C12.9 7.6 16.4 11.1 24 12C16.4 12.9 12.9 16.4 12 24C11.1 16.4 7.6 12.9 0 12C7.6 11.1 11.1 7.6 12 0Z" fill="currentColor"/></svg><span class="sr-only">loading</span></div><div class="bar"><i></i></div><div class="p">0%</div></div>
+<script>if (document.documentElement.classList.contains('returning')) document.getElementById('loader').classList.add('back');</script>
+<div id="morph" aria-hidden="true"><span></span></div>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+/* ================================================================ config — edit me */
+const PROFILE = {
+  name: 'Voula Evangelia',
+  role: 'Designer & digital artist',
+  // email as reversed char codes, so it never sits in the page as plain text
+  mail: [109,111,99,46,108,105,97,109,103,64,97,108,117,111,118,97,118,101],
+  socials: [                                    // hidden for now: uncomment and fill in to show them on the card
+    // { name: 'Instagram', handle: '@your.handle', url: '#' },
+    // { name: 'TikTok',    handle: '@your.handle', url: '#' },
+    { name: 'LinkedIn',  handle: 'in/evangelia-voula', url: 'https://www.linkedin.com/in/evangelia-voula-0197b4229/' },
+  ],
+  bio: 'Designer & digital artist working at the intersection of space, image and technology. Trained in architecture and graphic design, now finishing an MA in Digital Art Forms at the Athens School of Fine Arts.',
+};
+// Music: add your files as { title, artist, src: 'audio/music/file.mp3' }. `style` entries are placeholder synth loops.
+const TRACKS = [
+  { title: 'Pink Haze',       artist: 'placeholder loop', bpm: 70,  style: 'pad',   chords: [[57,60,64,67],[53,57,60,64],[50,53,57,60],[55,59,62,65]] },
+  { title: 'Lip Gloss Lo-Fi', artist: 'placeholder loop', bpm: 82,  style: 'lofi',  chords: [[62,65,69,72],[60,64,67,71],[57,60,64,67],[59,62,65,69]] },
+  { title: 'Night Drive',     artist: 'placeholder loop', bpm: 104, style: 'drive', chords: [[57,60,64],[53,57,60],[48,52,55],[55,59,62]] },
+];
+// Sound effects: drop files with these names into site/audio/sfx/ and they replace the synth versions.
+const SFX_NAMES = ['hover','grab','drop','open','close','flip','page','unroll','click','switch'];
+// The USB stick's files. A `folder` groups items. Each item = one project (thumbnail in site/thumbs/).
+const FILES = [
+  // a project with `href` opens its own page instead of the quick preview
+  { img: 'tedx-duth', name: 'tedx_duth.pdf', title: 'TEDxDUTh', tag: 'art direction · identity', href: 'work/tedx-duth/' },
+  { img: 'saudade', name: 'saudade.mp4', title: 'Saudade', tag: 'photoroman', href: 'work/saudade/' },
+  { img: 'pursuit', name: 'pursuit_of_the_ideal.mp4', title: 'The Pursuit of the Ideal', tag: 'video installation', href: 'work/pursuit-of-the-ideal/' },
+  { img: 'open-house', name: 'open_house.jpg', title: 'Open House', tag: 'poster', href: 'work/open-house/' },
+  { img: 'connection', name: 'i_feel_a_connection.mp4', title: 'I feel a connection', tag: 'video', href: 'work/i-feel-a-connection/' },
+  { img: 'olfabooth', name: 'olfabooth.pptx', title: 'OLFABOOTH', tag: 'concept · L’Oréal Brandstorm', href: 'work/olfabooth/' },
+  { img: 'ate', name: 'ati.mp4', title: 'Άτη', tag: 'short film', href: 'work/ate/' },
+  { img: 'elysium', name: 'elysium.mp4', title: 'Elysium', tag: 'spatial installation', href: 'work/elysium/' },
+  { img: '38780-118', name: '38780-118.jpg', title: '38780-118', tag: 'installation · Tsepelovo', href: 'work/38780-118/' },
+  { img: 'drt', name: 'drt_argo.png', title: 'DRT — Argo', tag: 'graphic design · formula student', href: 'work/drt/' },
+];
+// Who made each object — shown small at the bottom when the object is picked up (the bag: when clicked).
+// An entry with `todo: true` stays hidden until it's filled in.
+const CC0 = ['CC0', 'https://creativecommons.org/publicdomain/zero/1.0/'];
+const CREDIT = {
+  bag:     { by: '3D model “Women’s bag” by emelyarules', url: 'https://sketchfab.com/3d-models/womens-bag-f5bef92473d94fc5b2b01c16a02154aa', lic: ['CC BY 4.0', 'https://creativecommons.org/licenses/by/4.0/'], note: 'recoloured & simplified' },   // recoloured brown
+  watch:   { by: '3D model “Digital Wrist Watch” by Adrian C · Poly Haven', url: 'https://polyhaven.com/a/digital_wrist_watch', lic: CC0 },
+  pen:     { by: '3D model “Stationery Supplies” by Mateusz Sadek · Poly Haven', url: 'https://polyhaven.com/a/stationery_supplies', lic: CC0 },
+  walkman: { todo: true, by: '3D model “Walkman” by TODO', url: '', lic: ['TODO', ''] },
+  usb:     { todo: true, by: '3D model “USB stick” by TODO', url: '', lic: ['TODO', ''] },
+  glasses: { by: '3D model “Balenciaga Sunglasses” by redizajnd', url: 'https://sketchfab.com/3d-models/balenciaga-sunglasses-cda3e70d71c54d12898c81531550be4c', lic: ['CC BY 4.0', 'https://creativecommons.org/licenses/by/4.0/'], note: 'temples folded & simplified' },
+  coin1:   { by: '3D model “1 Euro Coin” by korkigames', url: 'https://sketchfab.com/3d-models/1-euro-coin-992424bd87714a29bcd4c58940e05ded', lic: ['CC BY 4.0', 'https://creativecommons.org/licenses/by/4.0/'] },
+  coin2:   { by: '3D model “2 Euro” by Francesca Cepparulo_3D', url: 'https://sketchfab.com/3d-models/2-euro-27b7daeba9724f748282fd438bac11a2', lic: ['CC BY 4.0', 'https://creativecommons.org/licenses/by/4.0/'] },
+  tiles:   { todo: true, by: 'Surface materials “Marble021” & “Concrete015” · ambientCG', url: 'https://ambientcg.com', lic: CC0 },   // not used in the studio look
+  card:    { by: 'Designed by Voula Evangelia' },
+  receipt: { by: 'Designed by Voula Evangelia' },
+  id:      { by: 'Designed by Voula Evangelia' },
+};
+const creditHTML = id => {
+  const c = CREDIT[id]; if (!c || c.todo) return '';
+  const a = (t, u) => u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>` : esc(t);
+  return a(c.by, c.url) + (c.lic ? ' · ' + a(c.lic[0], c.lic[1]) : '') + (c.note ? ' · ' + esc(c.note) : '');
+};
+// CV — used by the receipt (drawn) and by the text version of the page (read by screen readers & search engines)
+const CV = {
+  sections: [
+    { title: 'Experience', items: [
+      { years: '2022—2023', role: 'Design Team Co-Coordinator & Graphic Designer', where: 'TEDxDUTh, Xanthi', detail: 'brand identity · social media · merch · print · web graphics · video' },
+      { years: '2021—2022', role: 'Graphic Designer', where: 'DRT Formula Student Team, Xanthi', detail: 'social content · merch · print · video' },
+      { years: '2021', role: 'Graphic Designer & Assistant', where: 'Techni Malama — signage studio, Thessaloniki', detail: 'signage & banner design' },
+      { years: '2018—2023', role: 'Radio Producer / DJ', where: 'Underground Web Radio, Xanthi', detail: 'own weekly show for 5 years · live DJ sets' },
+    ] },
+    { title: 'Education', items: [
+      { years: '2024—2026', role: 'MA Digital Art Forms', where: 'Athens School of Fine Arts' },
+      { years: '2018—2024', role: 'Diploma in Architecture', where: 'Democritus University of Thrace · 8.72/10', detail: 'thesis: “Elysium” — an immersive spatial installation on awareness and empathy around violence against women' },
+      { years: '2019—2021', role: 'Graphic Design (print & digital)', where: 'IEK Intergraphics' },
+      { years: '', role: 'Michigan Proficiency (C2)', where: 'English' },
+    ] },
+    { title: 'Workshops', items: [
+      { years: '2024', role: 'Natural habitation structures', where: 'Tsepelovo Art Station' },
+      { years: '2023', role: 'Stop Motion Animation', where: 'Xanthi' },
+    ] },
+  ],
+  skills: [['Video', 'Premiere · After Effects · DaVinci'], ['Design', 'Photoshop · Illustrator · InDesign'], ['3D', 'Blender · 3DCoat · Unreal'], ['Audio', 'Audacity · Reaper · Pd']],
+};
+// The pen's note — a proposal, rewrite freely.
+const NOTE = {
+  title: 'how I work',
+  lines: ['1. the idea <span>— what’s the question?</span>', '2. the direction <span>— why this look, this material, this medium</span>', '3. the result <span>— the visuals</span>', '4. my role <span>— said out loud</span>', '', 'thinking in space, structure & systems ✦'],
+};
+
+/* ================================================================ helpers */
+const V = (x = 0, y = 0, z = 0) => new THREE.Vector3(x, y, z);
+const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+const easeOut = t => 1 - Math.pow(1 - t, 3);
+const easeInOut = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+const approach = (a, b, s) => a < b ? Math.min(b, a + s) : Math.max(b, a - s);
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const email = () => String.fromCharCode(...PROFILE.mail.slice().reverse());
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+
+const M = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: .6, ...o });
+const TM = (map, o = {}) => new THREE.MeshStandardMaterial({ map, roughness: .6, ...o });
+function mesh(geo, mat, parent, p = [0, 0, 0], r = [0, 0, 0]) {
+  const m = new THREE.Mesh(geo, mat); m.position.set(...p); m.rotation.set(...r); if (parent) parent.add(m); return m;
+}
+function canvasTex(w, h, draw) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
+  draw(c.getContext('2d'), w, h, () => { t.needsUpdate = true; });
+  return t;
+}
+const imgCache = new Map();
+function loadImg(src) {
+  if (!imgCache.has(src)) imgCache.set(src, new Promise(res => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; }));
+  return imgCache.get(src);
+}
+function cover(x, img, dx, dy, dw, dh) {
+  const s = Math.max(dw / img.width, dh / img.height), w = img.width * s, h = img.height * s;
+  x.save(); x.beginPath(); x.rect(dx, dy, dw, dh); x.clip(); x.drawImage(img, dx + (dw - w) / 2, dy + (dh - h) / 2, w, h); x.restore();
+}
+
+// wait for web fonts before drawing canvas textures
+await Promise.race([
+  Promise.all(['italic 500 40px "Cormorant Garamond"', '500 40px "Cormorant Garamond"', '400 16px "Plus Jakarta Sans"', '500 16px "Plus Jakarta Sans"', '40px Caveat', '16px "DM Mono"', '500 16px "DM Mono"'].map(f => document.fonts.load(f))),
+  new Promise(r => setTimeout(r, 2500)),
+]);
+
+/* ================================================================ audio */
+const AU = { ctx: null, master: null, music: null, sfx: null, on: false, buffers: {}, noise: null };
+function audio() {
+  if (!AU.ctx) {
+    const c = AU.ctx = new AudioContext();
+    AU.master = c.createGain(); AU.master.gain.value = 0; AU.master.connect(c.destination);
+    AU.music = c.createGain(); AU.music.gain.value = .55; AU.music.connect(AU.master);
+    AU.sfx = c.createGain(); AU.sfx.gain.value = .7; AU.sfx.connect(AU.master);
+    const b = c.createBuffer(1, c.sampleRate, c.sampleRate), d = b.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    AU.noise = b;
+    SFX_NAMES.forEach(async n => {
+      try { const r = await fetch(`audio/sfx/${n}.mp3`); if (r.ok) AU.buffers[n] = await c.decodeAudioData(await r.arrayBuffer()); } catch (e) {}
+    });
+  }
+  if (AU.ctx.state === 'suspended') AU.ctx.resume();
+  return AU.ctx;
+}
+const soundBtn = document.getElementById('sound');
+const SPEAKER = '<path d="M3 9h4l5-4v14l-5-4H3z" fill="currentColor"/>';
+const ICON_ON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">${SPEAKER}<path d="M15.5 9.5a3.5 3.5 0 0 1 0 5"/><path d="M18 7a7 7 0 0 1 0 10"/></svg>`;
+const ICON_OFF = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">${SPEAKER}<path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>`;
+function drawSoundIcon() { soundBtn.innerHTML = AU.on ? ICON_ON : ICON_OFF; soundBtn.setAttribute('aria-label', AU.on ? 'Mute sound' : 'Turn sound on'); }
+// interaction sounds are on by default (the music still only plays from the walkman); the visitor's mute choice is remembered
+try { AU.on = localStorage.getItem('pf-sound') !== 'off'; } catch (e) { AU.on = true; }
+// volume (0–1), chosen on the slider that opens under the speaker on hover; remembered per visitor
+AU.vol = .8; try { const v = parseFloat(localStorage.getItem('pf-volume')); if (v >= 0 && v <= 1) AU.vol = v; } catch (e) {}
+drawSoundIcon();
+function setSound(on) {
+  AU.on = on; audio(); AU.master.gain.setTargetAtTime(on ? AU.vol : 0, AU.ctx.currentTime, .05);
+  try { localStorage.setItem('pf-sound', on ? 'on' : 'off'); } catch (e) {}
+  drawSoundIcon(); renderPlayer(); showVol(on ? AU.vol : 0);
+}
+const volEl = document.getElementById('vol');
+const volTrack = volEl.parentElement;
+function showVol(v) { volEl.value = v; volTrack.style.setProperty('--v', (v * 100) + '%'); }   // the filled part of the line
+showVol(AU.on ? AU.vol : 0);
+volEl.addEventListener('input', () => {
+  const v = +volEl.value; volTrack.style.setProperty('--v', (v * 100) + '%');
+  if (v > 0) { AU.vol = v; try { localStorage.setItem('pf-volume', v); } catch (e) {} }
+  if (v === 0) { if (AU.on) setSound(false); return; }
+  if (!AU.on) setSound(true); else AU.master.gain.setTargetAtTime(v, AU.ctx.currentTime, .03);
+});
+volEl.addEventListener('change', () => sfx('click'));   // a tick at the new level
+// browsers only allow audio after a gesture: wake the audio engine on the first click / key press
+const wakeAudio = () => { if (AU.on && !AU.ctx) { audio(); AU.master.gain.value = AU.vol; } };
+addEventListener('pointerdown', wakeAudio, { capture: true, once: true });
+addEventListener('keydown', wakeAudio, { capture: true, once: true });
+soundBtn.onclick = () => setSound(!AU.on);
+const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+function osc(type, f, t0, dur, g, dest, attack = .01) {
+  const c = AU.ctx, o = c.createOscillator(), ga = c.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, t0);
+  ga.gain.setValueAtTime(0, t0); ga.gain.linearRampToValueAtTime(g, t0 + attack); ga.gain.exponentialRampToValueAtTime(.0001, t0 + dur);
+  o.connect(ga).connect(dest); o.start(t0); o.stop(t0 + dur + .05);
+}
+function noise(t0, dur, g, dest, type = 'bandpass', f0 = 2000, f1 = f0, q = 1) {
+  const c = AU.ctx, s = c.createBufferSource(), fl = c.createBiquadFilter(), ga = c.createGain();
+  s.buffer = AU.noise; fl.type = type; fl.Q.value = q;
+  fl.frequency.setValueAtTime(f0, t0); fl.frequency.exponentialRampToValueAtTime(f1, t0 + dur);
+  ga.gain.setValueAtTime(0, t0); ga.gain.linearRampToValueAtTime(g, t0 + Math.min(.02, dur / 3)); ga.gain.exponentialRampToValueAtTime(.0001, t0 + dur);
+  s.connect(fl).connect(ga).connect(dest); s.start(t0, Math.random() * .5); s.stop(t0 + dur + .05);
+}
+function kick(t, dest, g = .35) {
+  const c = AU.ctx, o = c.createOscillator(), ga = c.createGain();
+  o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(45, t + .15);
+  ga.gain.setValueAtTime(g, t); ga.gain.exponentialRampToValueAtTime(.001, t + .3); o.connect(ga).connect(dest); o.start(t); o.stop(t + .32);
+}
+const SYN = {
+  hover:  (t, d) => osc('sine', 1500, t, .06, .025, d),
+  grab:   (t, d) => { osc('sine', 220, t, .14, .12, d); osc('sine', 330, t + .03, .1, .05, d); },
+  drop:   (t, d) => noise(t, .4, .07, d, 'bandpass', 1400, 300, 1.2),
+  open:   (t, d) => [72, 76, 79, 84, 88].forEach((m, i) => osc('triangle', mtof(m), t + i * .07, .6, .055, d)),
+  close:  (t, d) => [84, 79, 72].forEach((m, i) => osc('triangle', mtof(m), t + i * .06, .3, .04, d)),
+  flip:   (t, d) => noise(t, .25, .12, d, 'bandpass', 700, 3200, .8),
+  page:   (t, d) => { noise(t, .34, .14, d, 'bandpass', 500, 2600, .6); noise(t + .22, .1, .05, d, 'highpass', 4000, 4000, .5); },
+  unroll: (t, d) => noise(t, 1.1, .08, d, 'bandpass', 450, 1900, .7),
+  click:  (t, d) => osc('square', 900, t, .03, .03, d),
+  switch: (t, d) => { osc('sine', 660, t, .08, .05, d); osc('sine', 990, t + .07, .1, .05, d); },
+};
+function sfx(n) {
+  if (!AU.on || !AU.ctx) return;
+  const b = AU.buffers[n];
+  if (b) { const s = AU.ctx.createBufferSource(); s.buffer = b; s.connect(AU.sfx); s.start(); return; }
+  SYN[n]?.(AU.ctx.currentTime, AU.sfx);
+}
+const STYLES = {
+  pad(step, t, tr, d) {
+    const sp = 60 / tr.bpm / 2, ch = tr.chords[Math.floor(step / 8) % tr.chords.length];
+    if (step % 8 === 0) ch.forEach(n => { osc('triangle', mtof(n), t, sp * 8.6, .045, d, 1.2); osc('sine', mtof(n + 12) * 1.004, t, sp * 8.6, .02, d, 1.6); });
+    if (step % 2 === 0) osc('sine', mtof(ch[(step / 2 * 3) % ch.length] + 24), t, sp * 2.5, .025, d, .005);
+  },
+  lofi(step, t, tr, d) {
+    const sp = 60 / tr.bpm / 2, ch = tr.chords[Math.floor(step / 8) % tr.chords.length];
+    if (step % 8 === 0 || step % 8 === 5) kick(t, d, .28);
+    if (step % 4 === 2) noise(t, .18, .1, d, 'bandpass', 1800, 1100, .8);
+    noise(t + (step % 2 ? sp * .12 : 0), .04, .025, d, 'highpass', 7000, 7000, .5);
+    if (step % 8 === 0) ch.forEach((n, i) => osc('sine', mtof(n), t + i * .025, sp * 6, .045, d, .02));
+    if (step % 8 === 3) osc('triangle', mtof(ch[2] + 12), t, sp * 2, .03, d);
+  },
+  drive(step, t, tr, d) {
+    const sp = 60 / tr.bpm / 2, ch = tr.chords[Math.floor(step / 8) % tr.chords.length];
+    if (step % 2 === 0) kick(t, d, .3); else noise(t, .05, .035, d, 'highpass', 8000, 8000, .5);
+    if (step % 4 === 2) noise(t, .2, .08, d, 'bandpass', 1500, 900, .7);
+    osc('sawtooth', mtof(ch[0] - 12), t, sp * .9, .035, d);
+    osc('square', mtof(ch[step % ch.length] + 12), t, sp * .6, .015, d);
+  },
+};
+const PL = { i: 0, playing: false, step: 0, next: 0, timer: null, el: null, started: 0 };
+function play() {
+  audio(); if (!AU.on) setSound(true);
+  const tr = TRACKS[PL.i]; PL.playing = true; PL.started = AU.ctx.currentTime;
+  if (tr.src) {
+    if (!PL.el || PL.el.dataset.src !== tr.src) {
+      PL.el = new Audio(tr.src); PL.el.loop = true; PL.el.dataset.src = tr.src;
+      AU.ctx.createMediaElementSource(PL.el).connect(AU.music);
+    }
+    PL.el.play();
+  } else {
+    PL.step = 0; PL.next = AU.ctx.currentTime + .08; clearInterval(PL.timer);
+    PL.timer = setInterval(() => {
+      const t = TRACKS[PL.i], sp = 60 / t.bpm / 2;
+      while (PL.next < AU.ctx.currentTime + .15) { STYLES[t.style](PL.step, PL.next, t, AU.music); PL.next += sp; PL.step++; }
+    }, 25);
+  }
+  renderPlayer();
+}
+function pause() { PL.playing = false; clearInterval(PL.timer); if (PL.el) PL.el.pause(); renderPlayer(); }
+function setTrack(i) {
+  pause(); if (PL.el) { PL.el.pause(); PL.el = null; }
+  PL.i = (i + TRACKS.length) % TRACKS.length; sfx('switch'); play();
+}
+const nowBtn = document.getElementById('now');
+nowBtn.onclick = () => focus(items.find(i => i.id === 'walkman'));
+function renderPlayer() {
+  const tr = TRACKS[PL.i];
+  nowBtn.textContent = (PL.playing ? '♫ ' : '❚❚ ') + tr.title; nowBtn.classList.toggle('on', PL.playing || PL.started > 0);
+  const box = document.querySelector('.player'); if (!box) return;
+  box.querySelector('[data-a=play]').textContent = PL.playing ? '❚❚ pause' : '▶ play';
+  // the highlighted pill is the current track (no separate "now playing" line)
+  box.querySelectorAll('li button').forEach((b, i) => { b.classList.toggle('cur', i === PL.i); b.toggleAttribute('aria-current', i === PL.i); });
+}
+function beatPulse() {
+  if (!PL.playing || !AU.ctx) return 0;
+  const bpm = TRACKS[PL.i].bpm || 90, ph = ((AU.ctx.currentTime - PL.started) * bpm / 60) % 1;
+  return Math.exp(-ph * 6);
+}
+
+/* ================================================================ renderers */
+const stageEl = document.getElementById('stage');
+const mainR = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+const fxR = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+for (const r of [mainR, fxR]) { r.outputColorSpace = THREE.SRGBColorSpace; r.setClearColor(0x000000, 0); r.domElement.classList.add('gl'); }
+stageEl.appendChild(mainR.domElement);
+fxR.domElement.id = 'fx'; document.body.insertBefore(fxR.domElement, document.getElementById('vignette'));
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(40, 1, .1, 200);
+// each renderer needs its own copy of the reflection environment (separate GL contexts)
+const room = new RoomEnvironment();
+const envMain = new THREE.PMREMGenerator(mainR).fromScene(room, .04).texture;
+const envFx = new THREE.PMREMGenerator(fxR).fromScene(room, .04).texture;
+scene.environmentIntensity = 1;
+const lights = [new THREE.HemisphereLight(0xfff2f7, 0xd8a9c2, 1.1), new THREE.DirectionalLight(0xfff6ef, 1.8), new THREE.DirectionalLight(0xffb8d6, .9)];
+lights[1].position.set(-3, 6, 8); lights[2].position.set(6, -2, 3);
+lights.forEach(l => { l.layers.enableAll(); scene.add(l); });
+
+/* ================================================================ items */
+const items = [], pickables = [];
+function makeItem(o) {
+  const group = new THREE.Group(); scene.add(group);
+  const body = o.body || new THREE.Group(); group.add(body);
+  const it = Object.assign({
+    group, body, off: V(), vel: V(), tilt: V(), spin: V(), hoverW: 0, focusW: 0, layer: 0,
+    phase: rnd() * 10, mass: 1, focusable: true, scale: 1, showScale: 1.6, showRot: [0, 0, 0], showLift: .3, showX: 0, delay: .3, label: '',
+  }, o);
+  it.homeRot = new THREE.Euler(...(o.rot || [0, 0, 0])); it.home = V();
+  items.push(it); register(it); return it;
+}
+function register(it) {
+  it.mats ??= new Set();
+  it.group.traverse(m => {
+    if (!m.isMesh) return;
+    if (!m.userData.item) { m.userData.item = it; pickables.push(m); }
+    m.castShadow = true;
+    [].concat(m.material).forEach(mt => { if (mt && mt.emissive && !mt.emissiveMap) { mt.userData.em0 ??= mt.emissive.clone(); it.mats.add(mt); } });
+  });
+}
+// soft pink glow while hovering
+const GLOW = new THREE.Color(1, .82, .9);
+function setGlow(it, g) {
+  if (Math.abs(g - (it._glow ?? 0)) < .003) return; it._glow = g;
+  for (const mt of it.mats) mt.emissive.copy(mt.userData.em0).lerp(GLOW, g * .22);
+}
+function setLayer(it, l) { if (it.layer === l) return; it.layer = l; it.group.traverse(o => o.layers.set(l)); }
+
+// Real-world scale: every object is sized from its real dimensions in cm.
+const CM = .19;                       // world units per centimetre (bag ≈ 32 cm ≈ 6 units)
+// load a GLB, centre it and scale it so its largest side (or that of the node matching `ref`) is `size` units
+const gltf = new GLTFLoader();
+const loadState = new Map();          // url → { loaded, total, done } for the loading screen
+let introT0 = 0;                      // the floating-in starts once everything has loaded
+const mouth = new THREE.Vector3(), MOUTH = new THREE.Vector3(1.3, 1.6, .3);   // the bag's opening, relative to its centre
+function loadModel(url, it, size, onLoad, ref) {
+  const st = { loaded: 0, total: 0, done: false }; loadState.set(url, st);
+  gltf.load(url, g => {
+    st.done = true;
+    const root = g.scene;
+    root.traverse(o => { if (o.isMesh) (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => { if (m.map) m.map.anisotropy = 8; }); });
+    const box = new THREE.Box3().setFromObject(root), sz = box.getSize(V()), c = box.getCenter(V());
+    let refNode = null; if (ref) root.traverse(o => { if (!refNode && ref.test(o.name)) refNode = o; });
+    const rsz = refNode ? new THREE.Box3().setFromObject(refNode).getSize(V()) : sz;
+    const s = size / Math.max(rsz.x, rsz.y, rsz.z);
+    root.scale.setScalar(s); root.position.copy(c).multiplyScalar(-s);
+    it.body.add(root); register(it);
+    if (it.layer) it.group.traverse(o => o.layers.set(it.layer));
+    onLoad?.(root);
+  }, e => { st.loaded = e.loaded; st.total = e.total || st.total; },
+     err => { console.warn('model failed to load', url, err); st.done = true; });
+}
+
+/* ---------- tiled backdrop (PBR, ambientCG): white tiles in light mode, black tiles in dark mode
+   The objects lie "above" it like a flat-lay photo and cast soft shadows on it. */
+const BACKDROP = {
+  z: -2.6, size: 90,
+  // bigger tiles = each texture covers more of the screen, so the repeat isn't noticeable
+  light: { name: 'marble2', spanCm: 45 },                           // Marble021 — white marble with warm pink veins (smaller span = crisper)
+  // other light options: { name: 'marble1', spanCm: 110 } (Marble025), { name: 'concrete2', tileCm: 9, tilesPerTex: 8, ao: true } (Concrete010), { name: 'concrete1', spanCm: 70 } (Concrete022)
+  // previous light options kept for reference: { name: 'white2', tileCm: 7, tilesPerTex: 5, ao: true } (Tiles017)
+  dark:  { name: 'concrete3', spanCm: 90 },                         // Concrete015, darkened to charcoal
+  // other dark option: { name: 'black2', tileCm: 4, tilesPerTex: 12, ao: true } (Tiles138)
+};
+const texLoader = new THREE.TextureLoader();
+function tileTex(file, srgb, repeat) {
+  const st = { loaded: 0, total: 0, done: false }; loadState.set(file, st);
+  const t = texLoader.load('textures/' + file + '.jpg', () => { st.done = true; }, undefined, () => { st.done = true; });
+  t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(repeat, repeat); t.anisotropy = 8;
+  if (srgb) t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+function makeBackdrop(def, offset) {
+  const rep = BACKDROP.size / ((def.spanCm || def.tileCm * def.tilesPerTex) * CM);
+  const m = new THREE.MeshStandardMaterial({
+    map: tileTex(def.name + '_color', true, rep), normalMap: tileTex(def.name + '_normal', false, rep), roughnessMap: tileTex(def.name + '_rough', false, rep),
+    aoMap: def.ao ? tileTex(def.name + '_ao', false, rep) : null, roughness: 1, envMapIntensity: .45, transparent: true,
+  });
+  const geo = new THREE.PlaneGeometry(BACKDROP.size, BACKDROP.size);
+  geo.setAttribute('uv2', geo.attributes.uv);
+  const p = new THREE.Mesh(geo, m); p.position.z = BACKDROP.z + offset; p.receiveShadow = true; p.renderOrder = -1;
+  scene.add(p); return p;
+}
+const tilesLight = makeBackdrop(BACKDROP.light, 0), tilesDark = makeBackdrop(BACKDROP.dark, .002);
+
+/* ---------- "studio" look (A/B test): seamless blush paper (light) / plum velvet (dark), lit by a soft spot */
+// chosen background: "gallery" — one flat colour, unaffected by the lights. [light, dark]. Set FLAT = null for the lit blush paper / plum velvet.
+const FLAT = [0xf2f0ed, 0x141215];
+const look = 'studio';   // chosen look. ('surface' = the marble / concrete version, kept in code for reference)
+function grainTex(seedN, fibres) {      // subtle paper / fabric grain, generated (tiles seamlessly)
+  const N = 512, c = document.createElement('canvas'); c.width = c.height = N; const x = c.getContext('2d'), d = x.createImageData(N, N);
+  let s = seedN; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  for (let i = 0; i < d.data.length; i += 4) { const v = 128 + (r() - .5) * 46; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; }
+  x.putImageData(d, 0, 0);
+  if (fibres) { x.globalAlpha = .06; for (let i = 0; i < 900; i++) { x.strokeStyle = r() > .5 ? '#fff' : '#000'; x.beginPath(); const px = r() * N, py = r() * N, a = r() * Math.PI; x.moveTo(px, py); x.lineTo(px + Math.cos(a) * 18, py + Math.sin(a) * 18); x.stroke(); } }
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(14, 14); t.anisotropy = 8; return t;
+}
+function makeStudio(opts, offset) {
+  const g = grainTex(opts.seed, opts.fibres);
+  const flat = FLAT && new THREE.MeshBasicMaterial({ color: FLAT[offset ? 1 : 0], transparent: true });
+  const m = flat || new THREE.MeshPhysicalMaterial({ color: opts.color, roughness: opts.rough, bumpMap: g, bumpScale: opts.bump, sheen: opts.sheen || 0, sheenRoughness: .55, sheenColor: new THREE.Color(opts.sheenColor || 0x000000), envMapIntensity: .15, transparent: true });
+  const p = new THREE.Mesh(new THREE.PlaneGeometry(BACKDROP.size, BACKDROP.size), m); p.renderOrder = -1; scene.add(p); return p;
+}
+const studioLight = makeStudio({ color: 0xeedad5, rough: .95, bump: .015, seed: 7, fibres: true }, 0);                                 // warm blush seamless paper
+const studioDark  = makeStudio({ color: 0x5a2640, rough: .9, bump: .02, seed: 3, fibres: false, sheen: 1, sheenColor: 0xc06a90 }, .002); // plum velvet
+studioLight.material.transparent = false;
+// soft spotlight on the backdrop: bright in the middle, falling off to the edges like a studio sweep
+const spot = new THREE.SpotLight(0xfff4ee, 0, 0, .62, 1, 0);
+spot.layers.enableAll(); scene.add(spot); scene.add(spot.target);
+tilesLight.material.transparent = false;
+// soft shadows from the key light onto the tiles (main renderer only — the picked-up item floats free)
+const SHADOWS = false;                                                          // soft shadows on the background: true = on, false = off
+mainR.shadowMap.enabled = SHADOWS; mainR.shadowMap.type = THREE.VSMShadowMap;   // VSM = soft, blurry flat-lay shadows
+{
+  const key = lights[1], sc = key.shadow.camera;
+  key.castShadow = SHADOWS; key.shadow.mapSize.set(1024, 1024); key.shadow.radius = 14; key.shadow.blurSamples = 20; key.shadow.bias = -.0006;
+  sc.left = -14; sc.right = 14; sc.top = 11; sc.bottom = -11; sc.near = 1; sc.far = 40; sc.updateProjectionMatrix();
+}
+
+/* ---------- bag */
+const bag = makeItem({ id: 'bag', label: 'contents', focusable: false, mass: 2.8, delay: 0, pos: [-4.7, -2.4, -.6], posP: [-.6, -7.2, -.6], rot: [-.1, .3, -.7] });   // opening (top) turned towards the objects, tipped slightly away from the viewer
+loadModel('models/bag.glb', bag, 32 * CM);
+
+/* ---------- business card */
+function buildCard() {
+  const body = new THREE.Group(), W = 1.75, H = 1.0, CW = 700, CH = 400, links = [];
+  const ink = '#2a1f24', paper = '#f4eee9';
+  const front = canvasTex(CW, CH, (x, w, h) => {
+    x.fillStyle = paper; x.fillRect(0, 0, w, h);
+    x.fillStyle = ink; x.font = 'italic 500 72px "Cormorant Garamond"'; x.fillText(PROFILE.name, 52, 150);
+    x.font = '500 16px "Plus Jakarta Sans"'; x.letterSpacing = '4px'; x.fillText(PROFILE.role.toUpperCase(), 56, 190); x.letterSpacing = '0px';
+    x.fillRect(56, 232, 40, 2);
+    const em = email(); x.font = '22px "Plus Jakarta Sans"';
+    x.fillText('✉  ' + em, 56, 318); const mw = x.measureText('✉  ' + em).width;
+    x.fillRect(90, 326, mw - 34, 1.5);
+    links.push({ face: 4, rect: [46, 288, mw + 24, 48], act: () => { location.href = 'mailto:' + email(); } });
+    x.font = '32px "Cormorant Garamond"'; x.fillText('✦', w - 82, 86);
+  });
+  const back = canvasTex(CW, CH, (x, w, h) => {
+    x.fillStyle = ink; x.fillRect(0, 0, w, h); x.fillStyle = paper;
+    x.font = 'italic 500 46px "Cormorant Garamond"'; x.fillText('find me', 52, 80);
+    x.font = '20px "Plus Jakarta Sans"';
+    PROFILE.socials.forEach((s, i) => {
+      const y = 140 + i * 58;
+      x.globalAlpha = .6; x.fillText(s.name.toUpperCase(), 56, y); x.globalAlpha = 1; x.fillText(s.handle + '  ↗', 250, y);
+      links.push({ face: 5, rect: [46, y - 32, w - 92, 48], act: () => { if (s.url && s.url !== '#') window.open(s.url, '_blank', 'noopener'); } });
+    });
+  });
+  const side = M(0xe9e2dc);
+  mesh(new THREE.BoxGeometry(W, H, .02), [side, side, side, side, TM(front, { roughness: .8 }), TM(back, { roughness: .8 })], body);
+  return { body, links, CW, CH };
+}
+const flipper = {
+  flipped: false, flipW: 0, cardSpin: true,      // cards: easy horizontal turning, snaps to the nearest side
+  onBlur() { this.flipped = false; },
+  update(dt) { this.flipW = approach(this.flipW, this.flipped ? 1 : 0, dt / .7); this.body.rotation.y = easeInOut(this.flipW) * Math.PI; },
+};
+const card = makeItem(Object.assign(buildCard(), flipper, {
+  id: 'card', label: 'Contact me', pos: [-3.6, 1.7, .8], posP: [-1.1, 3.8, .6], rot: [.25, .35, -.2], delay: .5, showScale: 2.1, scale: 8.5 * CM / 1.75,
+  kicker: 'contact', title: 'Business card', desc: 'Say hi — for collaborations, freelance or just to connect.',
+  hint: 'click to flip ✦ tap a link',
+  extra: () => `<div class="act"><button data-a="mail">email me</button></div>`,   // flipping = click the card itself
+  wire(el) {
+    el.querySelector('[data-a=mail]').onclick = () => { sfx('click'); location.href = 'mailto:' + email(); };
+  },
+  linkAt(hit) {
+    if (!hit.uv || !hit.face) return null;
+    const px = hit.uv.x * this.CW, py = (1 - hit.uv.y) * this.CH;
+    return this.links.find(l => l.face === hit.face.materialIndex && px >= l.rect[0] && px <= l.rect[0] + l.rect[2] && py >= l.rect[1] && py <= l.rect[1] + l.rect[3]);
+  },
+  onClick(hit) { const l = this.linkAt(hit); if (l) { sfx('click'); l.act(); } else { this.flipped = !this.flipped; sfx('flip'); } },
+  cursorAt(hit) { return this.linkAt(hit) ? 'pointer' : 'grab'; },
+}));
+
+/* ---------- walkman (music player) */
+const walkman = makeItem({
+  id: 'walkman', label: 'Soundtrack', frameR: 2.1, pos: [1.9, 1.5, -.2], posP: [1.2, 2.7, -.2], rot: [1.25, -.35, .25], delay: .7,
+  showScale: .85, showRot: [Math.PI / 2, 0, 0], showLift: .7,
+  kicker: 'soundtrack', title: 'Walkman', desc: 'Pick the soundtrack for your visit — or turn it off.', hint: 'drag to turn ✦ space = play / pause',
+  extra() {
+    return `<div class="player">
+      <div class="ctrl"><button data-a="prev">⏮</button><button data-a="play">▶ play</button><button data-a="next">⏭</button></div>
+      <ol>${TRACKS.map((t, i) => `<li><button data-i="${i}">${esc(t.title)}</button></li>`).join('')}</ol></div>`;
+  },
+  wire(el) {
+    el.querySelector('.player').addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.i !== undefined) { setTrack(+b.dataset.i); return; }
+      ({ prev: () => setTrack(PL.i - 1), next: () => setTrack(PL.i + 1), play: () => PL.playing ? pause() : play() })[b.dataset.a]?.();
+    });
+    renderPlayer();
+  },
+  onClick() { PL.playing ? pause() : play(); },
+  pulse: 0,
+  update(dt) {   // a gentle "breathing" on the beat while music plays
+    this.pulse += (beatPulse() - this.pulse) * (1 - Math.exp(-10 * dt));
+    this.body.scale.setScalar(1 + this.pulse * (this === focused ? .012 : .008));
+  },
+});
+loadModel('models/walkman.glb', walkman, 11.5 * CM, null, /walkman/i);   // sized by the player body, earphones follow
+
+/* ---------- watch (shows the real time) */
+const fmt = (d, tz) => new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: tz }).format(d);
+const watch = makeItem({
+  id: 'watch', label: 'Time', frameR: 1.9, pos: [4.6, .6, -.3], posP: [2.25, -2.46, -.4], rot: [1.42, .6, .15], rotP: [1.42, .15, .15], frameRP: 1.15, delay: .9,   // phone: lower right, strap upright   // dial turned towards the viewer, strap on a diagonal
+  showScale: 2.4, showRot: [Math.PI / 2, 0, 0], showLift: .5,   // close-up on the dial; straps run off-screen
+  faceCenter: null, sideCap: true,
+  kicker: 'time', title: '', desc: '', hint: 'drag to turn',
+  lcd: null, lastMin: '',
+  liveTitle() { const d = new Date(); return fmt(d) + `<span style="font-size:.45em;opacity:.7">:${String(d.getSeconds()).padStart(2, '0')}</span>`; },
+  liveDesc() { return 'your time'; },
+  drawLCD() {
+    if (!this.lcd) return;
+    const x = this.lcd.ctx, w = 256, h = 128, d = new Date();
+    x.setTransform(2, 0, 0, 2, 0, 0);   // canvas is 512×256, drawn in 256×128 units
+    x.fillStyle = '#b9c1ad'; x.fillRect(0, 0, w, h);
+    x.fillStyle = '#1f2a22'; x.font = '500 74px "DM Mono"'; x.textAlign = 'center'; x.textBaseline = 'middle';
+    x.fillText(fmt(d), w / 2 - 14, h / 2 + 6);
+    x.font = '500 30px "DM Mono"'; x.fillText(String(d.getSeconds()).padStart(2, '0'), w - 26, h / 2 + 22);
+    x.font = '18px "DM Mono"'; x.fillText(d.toLocaleDateString('en-GB', { weekday: 'short' }).toUpperCase(), w - 26, 26);
+    this.lcd.tex.needsUpdate = true;
+  },
+  update(dt, t) {
+    if (Math.floor(t * 2) !== this._tick) { this._tick = Math.floor(t * 2); this.drawLCD(); if (this === focused) document.getElementById('f-desc').innerHTML = this.liveBlock(); }
+    // when picked up, slide the model so the dial (not the middle of the strap) sits at the centre
+    if (this.faceCenter) this.body.position.copy(this.faceCenter).multiplyScalar(-easeInOut(this.focusW));
+  },
+  liveBlock() { return `<span class="time">${this.liveTitle()}</span>${this.liveDesc()}`; },   // the time itself is the content
+  onFocus() { document.getElementById('f-desc').innerHTML = this.liveBlock(); },
+});
+loadModel('models/watch.glb', watch, 3.8 * CM, root => {
+  // put a live LCD over the watch face (the glass mesh tells us where the face is)
+  let glass = null;
+  root.traverse(o => { if (o.isMesh && /glass/i.test([].concat(o.material).map(m => m.name).join())) glass = o; });
+  if (!glass) return;
+  watch.body.updateWorldMatrix(true, true);
+  glass.geometry.computeBoundingBox();
+  const box = glass.geometry.boundingBox.clone().applyMatrix4(new THREE.Matrix4().copy(watch.body.matrixWorld).invert().multiply(glass.matrixWorld));
+  const sz = box.getSize(V()), c = box.getCenter(V());
+  watch.faceCenter = c.clone();
+  const cv = document.createElement('canvas'); cv.width = 512; cv.height = 256;
+  const tex = new THREE.CanvasTexture(cv); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
+  watch.lcd = { ctx: cv.getContext('2d'), tex };
+  const pw = sz.x * .62, plane = mesh(new THREE.PlaneGeometry(pw, pw / 2), new THREE.MeshStandardMaterial({ map: tex, roughness: .35, emissive: 0xffffff, emissiveMap: tex, emissiveIntensity: .25 }), watch.body);
+  plane.position.set(c.x, box.max.y + .002, c.z); plane.rotation.x = -Math.PI / 2;
+  plane.userData.item = watch; pickables.push(plane); if (watch.layer) plane.layers.set(watch.layer);
+  watch.drawLCD();
+}, /^digital_wrist_watch$/);              // sized by the watch case (3.8 cm), straps follow
+
+/* ---------- pen (writes a note) */
+const side = document.getElementById('side');
+const pen = makeItem({
+  id: 'pen', label: 'How I work', focusable: false, frameR: 1.3, pos: [-1.2, 2.0, .5], posP: [-1.3, 1.6, .4], rot: [.3, .2, .8], delay: 1.0,
+  showScale: 1.45, showRot: [.15, .25, 1.0], showLift: .05, showX: -.21,   // steep diagonal beside the note
+  kicker: 'process', title: 'Pen', desc: 'A few notes on how I think about a project.', hint: 'drag to turn ✦ esc to put it back',
+  panel() {
+    return `<div class="note"><h4>${esc(NOTE.title)}</h4>${NOTE.lines.map((l, i) => `<p style="animation-delay:${.3 + i * .45}s">${l || '&nbsp;'}</p>`).join('')}</div>`;
+  },
+});
+loadModel('models/pen.glb', pen, 13.1 * CM);
+
+/* ---------- USB stick → a little computer full of projects */
+const usb = makeItem({
+  id: 'usb', label: 'My work', pos: [0, -.2, 1.0], posP: [.3, -1.35, 1.8], rot: [1.0, .5, .9], delay: 1.1,   // phone: in front of everything, a little below the glasses
+  showScale: 1.85, showRot: [Math.PI / 2, 0, -.5], showLift: .1, showX: -.3,
+  kicker: 'work', title: 'USB stick', desc: 'Everything I’ve made lives on here. Plug in and have a look.', hint: 'click a file to open it ✦ esc to unplug',
+  cap: null, capDir: V(), capOpen: 0,
+  panel: () => desktopHTML(),
+  wirePanel: el => wireDesktop(el),
+  update(dt, t) {
+    if (!this.cap) return;
+    // at rest the cap stays close and very slowly "breathes" open and shut, just enough to show the connector;
+    // fully open when picked up
+    const rest = .29 + .1 * Math.sin(t * .55);     // between "a little open" and "half open" — never fully shut
+    this.capOpen = approach(this.capOpen, this === focused && this.focusW > .6 ? 1 : rest, dt / .6);
+    const e = easeInOut(this.capOpen);
+    this.cap.position.copy(this.capHome).addScaledVector(this.capDir, e * this.capDist);
+    this.cap.rotation.z = this.capRot + e * .35;
+  },
+});
+loadModel('models/usb.glb', usb, 6 * CM, root => {
+  // chrome finish on the body and the cap (was aubergine)
+  root.traverse(o => {
+    if (!o.isMesh) return;
+    [].concat(o.material).forEach(m => {
+      if (/body|cap/i.test(m.name)) { m.map = null; m.metalnessMap = null; m.roughnessMap = null; m.color.setHex(0xffffff); m.metalness = 1; m.roughness = .2; m.envMapIntensity = 2.6; m.needsUpdate = true; }
+    });
+  });
+  let cap = null, bodyNode = null;
+  root.traverse(o => { if (/cap/i.test(o.name) && !cap) cap = o; if (/body/i.test(o.name) && !bodyNode) bodyNode = o; });
+  if (!cap || !bodyNode) return;
+  const cb = new THREE.Box3().setFromObject(cap), bb = new THREE.Box3().setFromObject(bodyNode);
+  const dirW = cb.getCenter(V()).sub(bb.getCenter(V())).normalize();
+  // convert the world direction into the cap parent's local space
+  const inv = new THREE.Matrix4().copy(cap.parent.matrixWorld).invert();
+  const p0 = V().applyMatrix4(inv), p1 = dirW.clone().applyMatrix4(inv);
+  usb.cap = cap; usb.capHome = cap.position.clone(); usb.capRot = cap.rotation.z;
+  usb.capDir = p1.sub(p0).normalize(); usb.capDist = cb.getSize(V()).length() / root.scale.x * .9 / 1;
+  usb.capDist = Math.max(...cb.getSize(V()).toArray()) / (root.scale.x || 1) * .9;
+});
+
+/* ---------- glasses → switch between light and dark mode */
+const glasses = makeItem({
+  id: 'glasses', label: 'dark / light mode', focusable: false, toggle: true, mass: .8,
+  pos: [5.1, 3.2, -.2], posP: [-1.5, .1, .4], rot: [.2, Math.PI + .45, -.1], delay: 1.2,   // shield turned to face us, at a three-quarter angle
+  spinFx: 0,
+  update(dt) { this.spinFx = approach(this.spinFx, 0, dt / 1.1); this.body.rotation.y = easeInOut(1 - this.spinFx) * Math.PI * 2 * (this.spinFx > 0 ? 1 : 0); },
+});
+// Balenciaga wrap sunglasses, temples folded shut (done in Blender): one glossy black shield
+loadModel('models/glasses_bal.glb', glasses, 15 * CM, root => {
+  root.traverse(o => {
+    if (!o.isMesh) return;
+    [].concat(o.material).forEach(m => {
+      m.transmission = 0; m.transparent = false; m.opacity = 1;
+      if (/^glass/i.test(m.name)) { m.color.set(0x060607); m.roughness = .06; m.metalness = 0; m.envMapIntensity = 1.8; }   // shield + temples: glossy black
+      m.needsUpdate = true;
+    });
+  });
+});
+
+/* ---------- loose change at the bottom of the bag (draggable, not focusable) */
+[
+  // both coins face the viewer at rot 0: two stay (almost) frontal, two lie at an angle
+  ['coin1', 2.325, [-2.15, 2.05, .6], [-1.8, -4.6, .8], [.35, -.4, .2]],   // between the card and the pen, facing us
+  ['coin2', 2.575, [2.8, -3.1, .3],   [1.1, -1.25, .6], [.9, .6, 1.2]],    // under the CV, tipped at an angle (phone: beside the watch)
+  ['coin1', 2.325, [3.35, -3.75, 1.0], [.85, -2.6, .6], [.75, -.6, .3]],  // its neighbour, lower and in front so the CV never covers it (phone: beside the watch)
+].forEach(([file, cm, pos, posP, rot], i) => {
+  const coin = makeItem({ id: 'coin' + i, focusable: false, note: 'just some spare change', mass: .4, pos, posP, rot, delay: .5 + i * .18 });
+  loadModel(`models/${file}.glb`, coin, cm * CM);
+});
+let theme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+let themeW = theme === 'dark' ? 1 : 0;
+function setTheme(t) {
+  theme = t; document.documentElement.dataset.theme = t;
+  try { localStorage.setItem('pf-theme', t); } catch (e) {}
+  document.querySelector('meta[name=theme-color]').content = t === 'dark' ? '#26141f' : '#f9c3d9';
+  drawThemeIcon();
+}
+// a visible ☾ / ☀ switch beside the sound button (the glasses still do the same, as an easter egg)
+const themeBtn = document.getElementById('theme-btn');
+const MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
+const SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>';
+function drawThemeIcon() {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  themeBtn.innerHTML = dark ? SUN : MOON; themeBtn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+}
+drawThemeIcon();
+themeBtn.onclick = () => toggleTheme();
+function toggleTheme() {
+  setTheme(theme === 'dark' ? 'light' : 'dark');
+  glasses.spinFx = 1; sfx('switch');
+  toast(theme === 'dark' ? '☾ dark mode' : '☀ light mode', 2600);   // the glasses' credit lives in the bag's contents list
+}
+
+let deskPath = null;           // null = root, otherwise folder name
+const FOLDER_SVG = '<svg viewBox="0 0 70 58" aria-hidden="true"><path d="M2 10a6 6 0 0 1 6-6h18l6 7h30a6 6 0 0 1 6 6v33a6 6 0 0 1-6 6H8a6 6 0 0 1-6-6z" fill="#f6a9c9"/><path d="M2 20h66v30a6 6 0 0 1-6 6H8a6 6 0 0 1-6-6z" fill="#f9c3d9"/></svg>';
+const allFiles = () => FILES.flatMap(f => f.folder ? f.items : [f]);
+function desktopHTML() {
+  return `<div class="win main" role="region" aria-label="USB drive VOULA_E — projects">
+    <div class="bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="ttl">VOULA_E (E:)</span><button data-a="eject" title="Eject" aria-label="Eject — close">⏏</button></div>
+    <div class="path"><button data-a="back" title="Back" aria-label="Back">‹</button><span class="where">E:\\</span></div>
+    <div class="files"></div>
+    <div class="status"><span class="count"></span><span>click to open</span></div>
+  </div>
+  <div class="win preview" role="dialog" aria-label="Project preview"><div class="bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="ttl pv-name"></span><button data-a="pclose" title="Close" aria-label="Close"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div><div class="pv"></div></div>`;
+}
+function renderFiles(el) {
+  const list = deskPath ? FILES.find(f => f.folder === deskPath).items : FILES;
+  el.querySelector('.where').textContent = 'E:\\' + (deskPath ? deskPath + '\\' : '');
+  el.querySelector('[data-a=back]').disabled = !deskPath;
+  el.querySelector('.count').textContent = `${list.length} items`;
+  el.querySelector('.files').innerHTML = list.map((f, i) => f.folder
+    ? `<button class="file" data-folder="${esc(f.folder)}"><span class="ic">${FOLDER_SVG}</span><span>${esc(f.folder)}</span></button>`
+    : `<button class="file" data-img="${esc(f.img)}"><span class="ic"><img src="thumbs/${esc(f.img)}.jpg" alt="" loading="lazy"></span><span>${esc(f.name)}</span></button>`).join('');
+}
+function openFile(el, img) {
+  const f = allFiles().find(x => x.img === img); if (!f) return;
+  if (f.href) { openPage(f, el); return; }   // this project has its own page
+  el.querySelector('.pv-name').textContent = f.name;
+  el.querySelector('.pv').innerHTML = `<div><img src="thumbs/${esc(f.img)}.jpg" alt="${esc(f.title)}"></div>
+    <div><h3>${esc(f.title)}</h3><p class="tag">${esc(f.tag)}</p>
+    <dl><dt>idea / brief</dt><dd>to be written</dd><dt>direction</dt><dd>to be written</dd><dt>result</dt><dd>to be written</dd><dt>my role</dt><dd>to be written</dd></dl></div>`;
+  el.querySelector('.preview').classList.add('on'); sfx('open');
+}
+function wireDesktop(el) {
+  renderFiles(el);
+  el.addEventListener('click', e => {
+    const a = e.target.closest('[data-a]')?.dataset.a;
+    if (a === 'back') { deskPath = null; renderFiles(el); sfx('click'); return; }
+    if (a === 'pclose') { el.querySelector('.preview').classList.remove('on'); sfx('click'); return; }
+    if (a === 'eject') { unfocus(); return; }
+    const f = e.target.closest('.file'); if (!f) return;
+    sfx('click');                                  // single click opens (no double-click guessing)
+    if (f.dataset.folder) { deskPath = f.dataset.folder; renderFiles(el); } else openFile(el, f.dataset.img);
+  });
+  el.addEventListener('keydown', e => { const f = e.target.closest('.file'); if (f && e.key === 'Enter') { e.preventDefault(); f.dataset.folder ? (deskPath = f.dataset.folder, renderFiles(el)) : openFile(el, f.dataset.img); } });
+}
+
+/* ---------- project pages: the scene fades to dark with "opening <file>…", the page fades in; coming back, the dark lifts on the open stick */
+const morph = document.getElementById('morph');
+let morphing = false;
+function openPage(f, el) {
+  if (morphing) return;
+  try { sessionStorage.setItem('pf-morph', JSON.stringify({ img: f.img })); sessionStorage.removeItem('pf-return'); } catch (e) {}
+  if (reduced) { location.href = f.href; return; }
+  morphing = true;
+  const label = morph.firstElementChild; label.textContent = `opening ${f.name}…`;
+  morph.classList.add('on'); sfx('open');
+  label.animate([{ opacity: 0 }, { opacity: 0, offset: .35 }, { opacity: 1, offset: .7 }, { opacity: 1 }], { duration: 950, fill: 'both' });
+  morph.animate([{ opacity: 0 }, { opacity: 1, offset: .5 }, { opacity: 1 }], { duration: 950, easing: 'ease', fill: 'both' })
+    .finished.then(() => { location.href = f.href; });
+}
+function hideMorph() {
+  morph.getAnimations({ subtree: true }).forEach(a => a.cancel());
+  morph.firstElementChild.textContent = '';
+  morph.classList.remove('on'); document.documentElement.classList.remove('returning'); morphing = false;
+}
+function liftMorph() {
+  morph.getAnimations({ subtree: true }).forEach(a => a.cancel());
+  morph.firstElementChild.textContent = ''; morph.classList.add('on');
+  morph.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 700, easing: 'ease', fill: 'both' }).finished.then(hideMorph);
+}
+// back from a project page: the loading screen (turning ✦) fades out on the USB stick, open in the right folder
+function land(m) {
+  hideMorph();
+  focus(usb, true);
+  const inFolder = FILES.find(f => f.folder && f.items.some(p => p.img === m.img));
+  deskPath = inFolder ? inFolder.folder : null; renderFiles(side);
+}
+// browser "back" that restores this page from the cache: the sheet is still up, so fold it back too
+addEventListener('pageshow', e => {
+  if (!e.persisted || !morph.classList.contains('on')) return;
+  morphing = false;
+  reduced ? hideMorph() : liftMorph();
+});
+
+/* ---------- receipt (CV) */
+function buildReceipt() {
+  const body = new THREE.Group(), W = .8, H = 3.4, CW = 480, CH = 2040;
+  const map = canvasTex(CW * 2, CH * 2, x => {   // drawn at 2× for crisp text up close
+    x.scale(2, 2); const w = CW, h = CH;
+    x.fillStyle = '#fbfaf5'; x.fillRect(0, 0, w, h); x.fillStyle = '#2a2326';
+    let y = 0; const L = 26, pad = 30;
+    const c = (s, f = '22px "DM Mono"') => { x.font = f; x.textAlign = 'center'; x.fillText(s, w / 2, y); x.textAlign = 'left'; };
+    const row = (a, b = '', f = '19px "DM Mono"') => { x.font = f; x.fillText(a, pad, y); if (b) { x.textAlign = 'right'; x.fillText(b, w - pad, y); x.textAlign = 'left'; } };
+    const wrap = (s, f = '17px "DM Mono"', indent = 0) => {
+      x.font = f; let line = '';
+      for (const word of s.split(' ')) { const tst = line ? line + ' ' + word : word; if (x.measureText(tst).width > w - pad * 2 - indent) { x.fillText(line, pad + indent, y); y += L - 4; line = word; } else line = tst; }
+      if (line) { x.fillText(line, pad + indent, y); y += L - 4; }
+    };
+    const rule = () => { c('- - - - - - - - - - - - - - - - -', '18px "DM Mono"'); y += L; };
+    y = 74; c('✦ CV ✦', '500 34px "DM Mono"'); y += 44;
+    c(PROFILE.name.toUpperCase(), '18px "DM Mono"'); y += 34; rule();
+    const section = s => { y += 6; row(s, '', '500 21px "DM Mono"'); y += L + 4; };
+    const item = (yr, role, where, detail) => {
+      if (yr) { row(yr, '', '15px "DM Mono"'); y += L - 4; }
+      wrap(role, '500 18px "DM Mono"'); wrap(where, '16px "DM Mono"');
+      if (detail) { x.fillStyle = '#5a4850'; wrap(detail, '15px "DM Mono"', 12); x.fillStyle = '#2a2326'; }
+      y += 12;
+    };
+    CV.sections.forEach((sec, i) => {
+      if (i) rule();
+      section(sec.title.toUpperCase());
+      sec.items.forEach(e => item(e.years, e.role, e.where, e.detail));
+    });
+    rule(); section('SKILLS');
+    CV.skills.forEach(([a, b]) => { row(a, '✓', '18px "DM Mono"'); y += L - 4; x.fillStyle = '#5a4850'; wrap(b, '15px "DM Mono"', 12); x.fillStyle = '#2a2326'; y += 6; });
+    rule();
+    row('SUBTOTAL', 'curiosity', '18px "DM Mono"'); y += L; row('TAX', '0%', '18px "DM Mono"'); y += L + 6;
+    row('TOTAL', 'HIRE ME', '500 24px "DM Mono"'); y += L + 20;
+    for (let i = 0; i < 64; i++) if (i % 3) x.fillRect(60 + i * 5.6, y, (i % 2) + 2, 80);
+    y += 120; c('thank you ✦ come again', 'italic 500 29px "Cormorant Garamond"');
+  });
+  const geo = new THREE.PlaneGeometry(W, H, 1, 48), base = geo.attributes.position.array.slice();
+  // matte paper: Lambert has no specular highlights, so the print doesn't glint as it moves
+  mesh(geo, new THREE.MeshLambertMaterial({ map, side: THREE.DoubleSide, color: 0xd8d8d8, emissive: 0xffffff, emissiveMap: map, emissiveIntensity: .5 }), body).frustumCulled = false;   // geometry changes as it unrolls
+  // rolls up from the BOTTOM edge: u = distance from the top; past u0 the paper winds into a spiral
+  const curl = c => {
+    const p = geo.attributes.position, u0 = H * (1 - .86 * c);
+    for (let i = 0; i < p.count; i++) {
+      const u = H / 2 - base[i * 3 + 1]; let d = u, z = 0;
+      if (u > u0) { const a = u - u0; let R = .12, th = a / R; R = Math.max(.045, .12 - .009 * th); th = a / R; d = u0 + R * Math.sin(th); z = R * (1 - Math.cos(th)); }
+      p.setXYZ(i, base[i * 3], H / 2 - d, z);
+    }
+    p.needsUpdate = true; geo.computeVertexNormals();
+  };
+  curl(1);
+  return { body, curl, H, roll: 1, lastRoll: 1 };
+}
+const receipt = makeItem(Object.assign(buildReceipt(), {
+  id: 'receipt', label: 'CV', frameR: 1.4, pos: [3.4, -2.0, .2], posP: [-1.3, -1.9, .2], rot: [.15, -.3, -.35], delay: 1.3,
+  showScale: 3.6, showLift: 0, scrollY: 0, sideCap: true, still: true, scale: 8 * CM / .8,
+  kicker: 'receipt', title: 'CV', desc: '', hint: 'scroll or drag to read ✦ esc to put it back',
+  range() { const viewH = 2 * tanH() * SHOW_D; return Math.max(0, (this.H * this.showScale * fitK() - viewH * .78) / 2); },
+  onFocus() { this.scrollY = -this.range(); setTimeout(() => { if (focused === this) sfx('unroll'); }, 900); },
+  update(dt) {
+    // arrives still rolled up, then the top stays put and the roll travels down, unrolling the paper
+    const unrolling = this === focused && this.focusW > .97;
+    this.roll = approach(this.roll, unrolling ? 0 : 1, dt / (unrolling ? 1.8 : 1));
+    if (Math.abs(this.roll - this.lastRoll) > .002) { this.curl(easeInOut(this.roll)); this.lastRoll = this.roll; }
+    // on the table the roll is centred on its own middle; once picked up the top edge is the anchor
+    this.body.position.y = -this.H * .4 * (1 - easeInOut(this.focusW));
+  },
+}));
+
+/* ---------- ID card (Greek-style, portfolio edition) */
+function guilloche(x, w, h, col) {
+  x.strokeStyle = col; x.lineWidth = 1;
+  for (let k = 0; k < 26; k++) {
+    x.beginPath();
+    for (let xx = 0; xx <= w; xx += 6) { const yy = h * .5 + Math.sin(xx * .012 + k * .5) * h * .32 * Math.sin(k * .37 + xx * .002) + (k - 13) * 4; xx ? x.lineTo(xx, yy) : x.moveTo(xx, yy); }
+    x.stroke();
+  }
+}
+function meander(x, y, w, s, col) {
+  x.strokeStyle = col; x.lineWidth = 2; x.beginPath();
+  for (let xx = 0; xx < w; xx += s * 4) {
+    x.moveTo(xx, y + s * 2); x.lineTo(xx, y); x.lineTo(xx + s * 3, y); x.lineTo(xx + s * 3, y + s * 1.5);
+    x.lineTo(xx + s, y + s * 1.5); x.lineTo(xx + s, y + s * .7); x.lineTo(xx + s * 2, y + s * .7);
+    x.moveTo(xx, y + s * 2); x.lineTo(xx + s * 4, y + s * 2);
+  }
+  x.stroke();
+}
+function flag(x, fx, fy, fw, fh) {
+  const st = fh / 9; for (let i = 0; i < 9; i++) { x.fillStyle = i % 2 ? '#fff' : '#0d5eaf'; x.fillRect(fx, fy + i * st, fw, st); }
+  x.fillStyle = '#0d5eaf'; x.fillRect(fx, fy, st * 5, st * 5); x.fillStyle = '#fff'; x.fillRect(fx + st * 2, fy, st, st * 5); x.fillRect(fx, fy + st * 2, st * 5, st);
+}
+// Greek ID layout (2023+ card), filled with portfolio data. Drawn in a 720×454 "card space", scaled up.
+const ID_DATA = {
+  surname: ['ΒΟΥΛΑ', 'VOULA'], given: ['ΕΥΑΓΓΕΛΙΑ', 'EVANGELIA'],
+  // the "official" fields are swapped for things about you
+  occupation: PROFILE.role.toUpperCase(),
+  languages: 'EL · EN',
+  studies: 'MA DIGITAL ART FORMS · ASFA', number: 'VE2026PF', small: '000726',
+};
+// ID photo: which part of the picture to use (x, y, width, height in source pixels) — framed on the face like a real ID
+const ID_PHOTO = { src: 'files/photo.jpg', crop: [270, 70, 470, 702] };
+function idPhoto(x, img, dx, dy, dw, dh) {
+  let [sx, sy, sw, sh] = ID_PHOTO.crop;
+  const want = dw / dh;                                  // keep the crop's centre, fit the slot's proportions
+  if (sw / sh > want) { const n = sh * want; sx += (sw - n) / 2; sw = n; } else { const n = sw / want; sy += (sh - n) / 2; sh = n; }
+  x.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+}
+function emblem(x, cx, cy, r) {
+  x.fillStyle = '#e9dcc0'; x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2); x.fill();
+  x.strokeStyle = '#b89f6a'; x.lineWidth = 1.5; x.beginPath(); x.arc(cx, cy, r - 2, 0, Math.PI * 2); x.stroke();
+  x.beginPath(); x.arc(cx, cy, r - 6, 0, Math.PI * 2); x.stroke();
+  x.fillStyle = '#9c8455'; x.beginPath(); x.moveTo(cx - r * .42, cy - r * .45); x.lineTo(cx + r * .42, cy - r * .45); x.lineTo(cx + r * .42, cy + r * .1);
+  x.quadraticCurveTo(cx + r * .42, cy + r * .45, cx, cy + r * .6); x.quadraticCurveTo(cx - r * .42, cy + r * .45, cx - r * .42, cy + r * .1); x.fill();
+  x.fillStyle = '#f4ecd9'; x.fillRect(cx - r * .07, cy - r * .4, r * .14, r * .9); x.fillRect(cx - r * .36, cy - r * .1, r * .72, r * .14);
+}
+function rosettes(x, w, h) {
+  x.strokeStyle = 'rgba(90,130,190,.16)'; x.lineWidth = 1;
+  for (const [cx, cy, r] of [[600, 150, 70], [690, 250, 60], [470, 420, 55], [120, 430, 40], [640, 420, 50]]) {
+    for (let k = 0; k < 14; k++) { x.beginPath(); x.ellipse(cx, cy, r, r * .38, k / 14 * Math.PI, 0, Math.PI * 2); x.stroke(); }
+  }
+}
+function buildID() {
+  const body = new THREE.Group(), CW = 1440, CH = 908, k = CW / 720;
+  const front = canvasTex(CW, CH, (x, w, h, up) => {
+    const paint = img => {
+      x.setTransform(k, 0, 0, k, 0, 0);
+      const W = 720, H = 454;
+      const g = x.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#e9eff6'); g.addColorStop(.5, '#dfe8f2'); g.addColorStop(1, '#e8edf4');
+      x.fillStyle = g; x.fillRect(0, 0, W, H);
+      guilloche(x, W, H, 'rgba(80,120,180,.09)'); rosettes(x, W, H); meander(x, H - 70, W, 6, 'rgba(80,120,180,.10)');
+      // header
+      emblem(x, 45, 36, 19);
+      const ink = '#16243d';
+      x.fillStyle = ink; x.font = '700 16.5px Arial'; x.fillText('ΔΕΛΤΙΟ ΤΑΥΤΟΤΗΤΑΣ', 70, 30); x.fillText('IDENTITY CARD', 70, 48);
+      x.fillText('ΕΛΛΗΝΙΚΗ ΔΗΜΟΚΡΑΤΙΑ', 290, 30); x.fillText('HELLENIC REPUBLIC', 290, 48);
+      x.fillStyle = '#2e9b57'; x.fillRect(538, 22, 22, 22); x.fillStyle = '#d6334a'; x.fillRect(560, 22, 22, 22);
+      x.fillStyle = '#fff'; x.beginPath(); x.arc(560, 33, 7, 0, Math.PI * 2); x.fill();
+      x.fillStyle = ink; x.font = '15px Arial'; x.fillText(ID_DATA.number, 592, 39);
+      // photo (laser-engraved look)
+      x.fillStyle = '#d7dee8'; x.fillRect(48, 95, 184, 275);
+      if (img) {
+        x.save(); x.filter = 'grayscale(1) contrast(1.05) brightness(1.06)'; idPhoto(x, img, 48, 95, 184, 275); x.restore();
+        x.fillStyle = 'rgba(255,255,255,.16)'; for (let yy = 95; yy < 370; yy += 2) x.fillRect(48, yy, 184, 1);
+        const fade = x.createLinearGradient(48, 0, 232, 0); fade.addColorStop(0, 'rgba(223,232,242,.25)'); fade.addColorStop(.12, 'rgba(223,232,242,0)'); fade.addColorStop(.88, 'rgba(223,232,242,0)'); fade.addColorStop(1, 'rgba(223,232,242,.35)');
+        x.fillStyle = fade; x.fillRect(48, 95, 184, 275);
+      }
+      // hologram disc
+      const hg = x.createRadialGradient(258, 312, 4, 258, 312, 42); hg.addColorStop(0, 'rgba(236,214,140,.55)'); hg.addColorStop(1, 'rgba(214,190,110,.35)');
+      x.fillStyle = hg; x.beginPath(); x.arc(258, 312, 42, 0, Math.PI * 2); x.fill();
+      // fields
+      const lab = (gr, en, fx, fy) => { x.fillStyle = '#3d4d66'; x.font = '10.5px Arial'; x.fillText(gr + ' / ', fx, fy); const wgr = x.measureText(gr + ' / ').width; x.font = 'italic 10.5px Arial'; x.fillText(en, fx + wgr, fy); };
+      const val = (s, fx, fy, size = 17) => { x.fillStyle = ink; x.font = `${size}px Arial`; x.fillText(s, fx, fy); };
+      lab('Επώνυμο', 'Surname', 290, 72); val(ID_DATA.surname[0], 290, 93); val(ID_DATA.surname[1], 290, 113);
+      lab('Όνομα', 'Given Name', 290, 132); val(ID_DATA.given[0], 290, 153); val(ID_DATA.given[1], 290, 173);
+      lab('Ιδιότητα', 'Occupation', 290, 194); val(ID_DATA.occupation, 290, 215);
+      lab('Γλώσσες', 'Languages', 290, 235); val(ID_DATA.languages, 290, 256);
+      lab('Σπουδές', 'Studies', 290, 276); val(ID_DATA.studies, 290, 297, 15.5);
+      lab('Υπογραφή Κατόχου', 'Signature of Bearer', 290, 357);
+      x.fillStyle = '#1d2a44'; x.font = '34px Caveat'; x.fillText('Voula E.', 305, 398);
+      // ghost image + GRC
+      x.fillStyle = 'rgba(255,255,255,.55)'; x.fillRect(604, 208, 74, 96);
+      if (img) { x.save(); x.globalAlpha = .55; x.filter = 'grayscale(1) contrast(1.2)'; idPhoto(x, img, 606, 210, 70, 92); x.restore(); }
+      x.fillStyle = '#2b3446'; x.font = '700 20px Arial'; x.textAlign = 'center'; x.fillText('GRC', 641, 296); x.textAlign = 'left';
+      x.fillStyle = ink; x.font = '26px "DM Mono"'; x.fillText(ID_DATA.small, 548, 368);
+      // flags
+      flag(x, 32, 392, 52, 34);
+      x.fillStyle = '#1f3c96'; x.fillRect(636, 390, 52, 36); x.fillStyle = '#ffd94a';
+      for (let s = 0; s < 12; s++) { const a = s / 12 * Math.PI * 2; x.beginPath(); x.arc(662 + Math.cos(a) * 13, 408 + Math.sin(a) * 13, 1.6, 0, Math.PI * 2); x.fill(); }
+      x.fillStyle = '#fff'; x.font = '700 11px Arial'; x.textAlign = 'center'; x.fillText('GR', 662, 412); x.textAlign = 'left';
+      x.setTransform(1, 0, 0, 1, 0, 0);
+      up();
+    };
+    paint(null); loadImg(ID_PHOTO.src).then(paint);
+  });
+  const back = canvasTex(CW, CH, (x, w, h) => {
+    x.setTransform(k, 0, 0, k, 0, 0); const W = 720, H = 454;
+    const g = x.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#e8edf4'); g.addColorStop(1, '#dfe8f2');
+    x.fillStyle = g; x.fillRect(0, 0, W, H); guilloche(x, W, H, 'rgba(80,120,180,.08)'); rosettes(x, W, H);
+    x.fillStyle = '#16243d'; x.font = '700 13px Arial'; x.fillText('ΣΧΕΤΙΚΑ / ABOUT', 32, 44);
+    x.font = 'italic 500 28px "Cormorant Garamond"'; let y = 80, line = '';
+    for (const word of PROFILE.bio.split(' ')) { const t = line ? line + ' ' + word : word; if (x.measureText(t).width > W - 64) { x.fillText(line, 32, y); y += 30; line = word; } else line = t; }
+    x.fillText(line, 32, y);
+    x.fillStyle = 'rgba(255,255,255,.75)'; x.fillRect(0, H - 112, W, 112);
+    x.fillStyle = '#16243d'; x.font = '23px "DM Mono"';
+    ['IDGRCVE2026PF<<<<<<<<<<<<<<<<', 'DESIGNER<DIGITAL<ARTIST<<<<<<<', 'VOULA<<EVANGELIA<<<<<<<<<<<<<<'].forEach((s, i) => x.fillText(s, 26, H - 78 + i * 30));
+    x.setTransform(1, 0, 0, 1, 0, 0);
+  });
+  // rounded-corner card: white edge body + front/back faces
+  const Wc = 1.712, Hc = 1.08, R = .06, D = .02;
+  const shape = new THREE.Shape(), hw = Wc / 2, hh = Hc / 2;
+  shape.moveTo(-hw + R, -hh); shape.lineTo(hw - R, -hh); shape.quadraticCurveTo(hw, -hh, hw, -hh + R); shape.lineTo(hw, hh - R); shape.quadraticCurveTo(hw, hh, hw - R, hh);
+  shape.lineTo(-hw + R, hh); shape.quadraticCurveTo(-hw, hh, -hw, hh - R); shape.lineTo(-hw, -hh + R); shape.quadraticCurveTo(-hw, -hh, -hw + R, -hh);
+  const edge = new THREE.ExtrudeGeometry(shape, { depth: D, bevelEnabled: false, curveSegments: 6 }); edge.translate(0, 0, -D / 2);
+  mesh(edge, M(0xe8edf3, { roughness: .35 }), body);
+  for (const t of [front, back]) { t.repeat.set(1 / Wc, 1 / Hc); t.offset.set(.5, .5); }
+  const face = new THREE.ShapeGeometry(shape, 6);
+  mesh(face, TM(front, { roughness: .45, envMapIntensity: .35 }), body, [0, 0, D / 2 + .0006]);
+  mesh(face, TM(back, { roughness: .45, envMapIntensity: .35 }), body, [0, 0, -D / 2 - .0006], [0, Math.PI, 0]);
+  return { body };
+}
+const idcard = makeItem(Object.assign(buildID(), flipper, {
+  id: 'id', label: 'Who am I?', pos: [.6, -2.4, .6], posP: [.2, -3.4, .8], rot: [.35, -.25, .3], delay: 1.5, showScale: 2.1, scale: 8.56 * CM / 1.712,
+  kicker: 'about', title: 'Identity card', desc: PROFILE.bio, hint: 'click to flip ✦ drag to turn',
+  onClick() { this.flipped = !this.flipped; sfx('flip'); },
+}));
+
+/* ---------- small floating bits (draggable, not focusable) */
+function starGeo() { const s = new THREE.Shape(); for (let i = 0; i < 10; i++) { const r = i % 2 ? .45 : 1, a = i / 10 * Math.PI * 2 + Math.PI / 2; i ? s.lineTo(Math.cos(a) * r, Math.sin(a) * r) : s.moveTo(Math.cos(a) * r, Math.sin(a) * r); } return new THREE.ExtrudeGeometry(s, { depth: .35, bevelEnabled: true, bevelSize: .08, bevelThickness: .08, bevelSegments: 2 }); }
+function heartGeo() { const s = new THREE.Shape(); s.moveTo(0, -1); s.bezierCurveTo(-1.6, .1, -.7, 1.3, 0, .55); s.bezierCurveTo(.7, 1.3, 1.6, .1, 0, -1); return new THREE.ExtrudeGeometry(s, { depth: .5, bevelEnabled: true, bevelSize: .12, bevelThickness: .12, bevelSegments: 3, curveSegments: 16 }); }
+const pearl = r => new THREE.SphereGeometry(r, 24, 16);
+const decoGeo = [[starGeo(), 0xfff27a, .17], [starGeo(), 0xffffff, .12], [heartGeo(), 0xff6fa5, .2], [pearl(.12), 0xfff6f2, 1],
+  [pearl(.09), 0xfff6f2, 1], [starGeo(), 0xc8f7a8, .14], [heartGeo(), 0xffb3cf, .15], [pearl(.07), 0xffe3ef, 1], [starGeo(), 0xd9c8ff, .13]];
+const decoSpots = [[-.9, 3.9, -1.2], [3.2, 3.9, -1.5], [-3.6, .4, 1.2], [6.6, -2.0, -1], [2.2, -.1, 1.6], [-.8, -3.4, .4], [1.0, -3.7, -.8], [6.4, 2.8, .8], [-5.4, 2.2, -1.4]];
+decoGeo.forEach(([g, c, s], i) => {
+  const body = new THREE.Group(); const m = mesh(g, M(c, { roughness: .25 }), body); m.scale.setScalar(s); g.center?.();
+  const [px, py, pz] = decoSpots[i];
+  makeItem({ id: 'deco' + i, body, focusable: false, mass: .5, pos: [px, py, pz], posP: [py * .45, px * .8, pz], rot: [rnd() * 3, rnd() * 3, rnd() * 3], delay: .2 + i * .12 });
+});
+
+/* ================================================================ layout / camera */
+let portrait = false; const home = { center: V(), z: 14 }, SHOW_D = 6;
+const tanH = () => Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+const fitK = () => Math.min(1, camera.aspect / 1.45);
+function layout() {
+  const w = innerWidth, h = innerHeight;
+  camera.aspect = w / h; camera.updateProjectionMatrix(); portrait = camera.aspect < .9;
+  mainR.setPixelRatio(Math.min(devicePixelRatio, 1.5)); mainR.setSize(w, h, false);
+  fxR.setPixelRatio(Math.min(devicePixelRatio, 2)); fxR.setSize(w, h, false);
+  for (const it of items) {
+    it.home.set(...(portrait && it.posP ? it.posP : it.pos));
+    if (it.rotP) it.homeRot.set(...(portrait ? it.rotP : it.rot));   // optional phone-only angle
+    if (it.id === 'bag') it.homeRot.z = portrait ? .05 : -.7;     // top of the bag points up towards the floating objects
+  }
+  // The USB stick (the work) is the centre of the frame. Zoom so every pickable object fits around it;
+  // the bag isn't counted, so it can bleed off the edge.
+  const c = portrait ? V(0, 0, 0) : items.find(i => i.id === 'usb').home;   // phone: frame stays put though the stick sits a little low
+  home.center.set(c.x, c.y, 0);
+  let halfW = 0, halfH = 0;
+  for (const it of items) {
+    if (!it.focusable) continue;
+    const r = (portrait && it.frameRP) || it.frameR || 1.1;      // how much room the object needs around its centre
+    halfW = Math.max(halfW, Math.abs(it.home.x - c.x) + r); halfH = Math.max(halfH, Math.abs(it.home.y - c.y) + r);
+  }
+  home.z = Math.max(halfH / tanH(), halfW / (tanH() * camera.aspect)) + 1.2;
+}
+addEventListener('resize', layout); layout();
+camera.position.set(home.center.x, home.center.y, home.z + 4);
+const curLook = home.center.clone();
+
+/* ================================================================ interaction */
+const ray = new THREE.Raycaster(); ray.layers.enableAll();
+const ndc = new THREE.Vector2(-9, -9), mouse = new THREE.Vector2();
+const fx = fxR.domElement, tip = document.getElementById('tip'), hint = document.getElementById('hint');
+const ui = document.getElementById('focus-ui'), extra = document.getElementById('extra');
+let focused = null, hovered = null, press = null, drag = null, sideTimer = null;
+const MAXR = 2.4;
+
+function pick(list) {
+  ray.setFromCamera(ndc, camera);
+  const h = ray.intersectObjects(list, false).find(x => x.object.userData.item?.group.visible);   // hidden items can't be grabbed
+  return h ? { item: h.object.userData.item, hit: h } : null;
+}
+const focusMeshes = it => pickables.filter(m => m.userData.item === it);
+function setNdc(e) { ndc.set(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); }
+
+fx.addEventListener('pointerdown', e => {
+  setNdc(e); fx.setPointerCapture(e.pointerId);
+  press = { x: e.clientX, y: e.clientY, lx: e.clientX, ly: e.clientY, t: performance.now(), mode: 'none' };
+  if (focused) {
+    const p = pick(focusMeshes(focused));
+    press.hit = p?.hit; press.mode = p ? (focused.id === 'receipt' ? 'scroll' : 'spin') : 'none';
+  } else {
+    const p = pick(pickables);
+    if (p) {
+      press.item = p.item; press.mode = 'drag';
+      const it = p.item; const n = camera.getWorldDirection(V()).negate();
+      const plane = new THREE.Plane().setFromNormalAndCoplanarPoint(n, it.group.position);
+      ray.setFromCamera(ndc, camera); const hp = V(); ray.ray.intersectPlane(plane, hp);
+      drag = { item: it, plane, grab: hp.clone().sub(it.group.position), target: it.group.position.clone() };
+      sfx('grab'); fx.style.cursor = 'grabbing';
+    }
+  }
+});
+addEventListener('pointermove', e => {
+  setNdc(e); mouse.copy(ndc);
+  tip.style.left = e.clientX + 'px'; tip.style.top = e.clientY + 'px';
+  if (!press) return;
+  const dx = e.clientX - press.lx, dy = e.clientY - press.ly; press.lx = e.clientX; press.ly = e.clientY;
+  if (press.mode === 'drag' && drag) {
+    ray.setFromCamera(ndc, camera); const hp = V();
+    if (ray.ray.intersectPlane(drag.plane, hp)) drag.target.copy(hp).sub(drag.grab);
+  } else if (press.mode === 'spin' && focused) {
+    if (focused.cardSpin) { focused.spin.y += dx * .022; focused.spin.x = clamp(focused.spin.x + dy * .004, -.5, .5); }
+    else { focused.spin.y += dx * .008; focused.spin.x += dy * .008; }
+  } else if (press.mode === 'scroll' && focused) {
+    const viewH = 2 * tanH() * SHOW_D, r = focused.range();
+    focused.scrollY = clamp(focused.scrollY - dy * viewH / innerHeight, -r, r);
+  }
+});
+fx.addEventListener('pointerup', e => {
+  if (!press) return;
+  const moved = Math.hypot(e.clientX - press.x, e.clientY - press.y) > 6, quick = performance.now() - press.t < 450;
+  if (drag) { sfx('drop'); drag = null; }
+  if (!moved && quick) {
+    if (bagOpen) closeBag();
+    else if (focused) { if (press.hit) focused.onClick?.(press.hit); else unfocus(); }
+    else if (press.item?.focusable) focus(press.item);
+    else if (press.item?.id === 'bag') openBag();
+    else if (press.item?.toggle) toggleTheme();
+    else if (press.item?.note) { toast(press.item.note, 2600); sfx('hover'); }
+  }
+  press = null; fx.style.cursor = '';
+});
+fx.addEventListener('wheel', e => {
+  if (focused?.id !== 'receipt') return;
+  e.preventDefault(); const r = focused.range();
+  focused.scrollY = clamp(focused.scrollY + e.deltaY * .004, -r, r);
+}, { passive: false });
+// Scrolling leads to the work: with nothing open, a clear scroll down (a swipe up on phones) brings the USB stick forward,
+// as if it had been clicked; scrolling back up (swiping down) puts it away again. Small nudges are ignored.
+let wheelAcc = 0, wheelT = 0, scrollLock = 0;
+const scrollReady = () => simT - introT0 > 2.5 && !bagOpen && performance.now() > scrollLock;
+function scrollToWork(dir) {   // dir > 0: towards the work, < 0: back to the bag
+  if (!scrollReady()) return;
+  if (dir > 0 && !focused) { focus(usb); scrollLock = performance.now() + 900; }
+  else if (dir < 0 && focused === usb) { unfocus(); scrollLock = performance.now() + 900; }
+}
+fx.addEventListener('wheel', e => {
+  if (focused && focused !== usb) return;
+  const now = performance.now(); if (now - wheelT > 300) wheelAcc = 0; wheelT = now;
+  wheelAcc += e.deltaY;
+  if (Math.abs(wheelAcc) > 140) { scrollToWork(Math.sign(wheelAcc)); wheelAcc = 0; }
+}, { passive: true });
+let swipe = null;   // touch: only swipes that start on empty space (a touch on an object drags it instead)
+fx.addEventListener('pointerdown', e => { swipe = e.pointerType === 'touch' && !press?.item ? { y: e.clientY, t: performance.now() } : null; });
+fx.addEventListener('pointerup', e => {
+  if (!swipe) return; const dy = swipe.y - e.clientY, quick = performance.now() - swipe.t < 700; swipe = null;
+  if (quick && Math.abs(dy) > 70) scrollToWork(Math.sign(dy));
+});
+addEventListener('keydown', e => {
+  if (e.key === 'Escape' && bagOpen) { closeBag(); return; }
+  if (e.key === 'Escape') { const pv = side.querySelector('.preview.on'); if (pv) pv.classList.remove('on'); else unfocus(); }
+  if (focused === walkman && e.code === 'Space' && !e.target.closest('button')) { e.preventDefault(); PL.playing ? pause() : play(); }
+  if (focused === receipt && /^(ArrowDown|ArrowUp|PageDown|PageUp)$/.test(e.key)) {   // read the CV with the keyboard
+    e.preventDefault(); const r = receipt.range(), step = /Page/.test(e.key) ? 1.2 : .3;
+    receipt.scrollY = clamp(receipt.scrollY + (/Down/.test(e.key) ? step : -step), -r, r);
+  }
+});
+document.getElementById('close').onclick = () => unfocus();
+
+// instant = already open (coming back from a project page): no fly-in, no cap opening, no window pop, no sound
+function focus(it, instant) {
+  if (!it || focused === it) return;
+  closeBag(true);
+  if (focused) unfocus(true);
+  focused = it; it.spin.set(0, 0, 0); setLayer(it, 1);
+  document.getElementById('f-kicker').textContent = '';
+  document.getElementById('f-title').textContent = it.label;   // only your label (CV, My work, Contact me…), not the object's name
+  document.getElementById('f-desc').textContent = it.desc;
+  document.getElementById('f-hint').textContent = it.hint;
+  document.getElementById('f-credit').innerHTML = creditHTML(it.id);
+  if (it === usb) { workSeen = true; try { localStorage.setItem('pf-work-seen', '1'); } catch (e) {} }
+  extra.innerHTML = it.extra ? it.extra() : ''; it.wire?.(extra);
+  ui.classList.toggle('side', !!(it.panel || it.sideCap));
+  stageEl.classList.add('dim'); ui.classList.add('on'); hint.style.opacity = 0; tip.style.opacity = 0;
+  clearTimeout(sideTimer); side.classList.remove('on');
+  if (it.panel) {
+    side.innerHTML = it.panel(); it.wirePanel?.(side);
+    if (instant) side.classList.add('on');
+    else sideTimer = setTimeout(() => { if (focused === it) side.classList.add('on'); }, 700);
+  }
+  if (instant) {
+    for (const el of [side, stageEl, ui]) { el.style.transition = 'none'; void el.offsetWidth; requestAnimationFrame(() => requestAnimationFrame(() => { el.style.transition = ''; })); }
+    it.focusW = 1; if ('capOpen' in it) it.capOpen = 1;
+    camera.position.set(home.center.x, home.center.y, home.z); curLook.copy(home.center);
+    introT0 = simT - 10;   // everything else already floating in place
+  }
+  it.onFocus?.(); if (!instant) sfx('open');
+}
+function unfocus(silent) {
+  if (!focused) return;
+  focused.onBlur?.(); focused = null;
+  clearTimeout(sideTimer); side.classList.remove('on');
+  stageEl.classList.remove('dim'); ui.classList.remove('on'); hint.style.opacity = 1;
+  if (lastTrigger) { lastTrigger.focus(); lastTrigger = null; }   // keyboard users land back where they were
+  if (!silent) sfx('close');
+}
+
+/* ================================================================ loop */
+const clock = new THREE.Clock();
+const tmp = V(), acc = V(), hf = V(), pos = V(), sp = V(), dir = V(), up = V(), right = V();
+const eul = new THREE.Euler(), e2 = new THREE.Euler(), qa = new THREE.Quaternion(), qb = new THREE.Quaternion(), q2 = new THREE.Quaternion();
+let lastHoverSfx = 0, simT = 0;
+const DARK_GROUND = new THREE.Color(0x3a2440), SPOT_DARK = new THREE.Color(0xffd6e6);
+let workSeen = false; try { workSeen = localStorage.getItem('pf-work-seen') === '1'; } catch (e) {}
+
+function frame(_, fakeDt) {
+  const dt = fakeDt ?? Math.min(clock.getDelta(), .05), t = (simT += dt);
+
+  // hover
+  if (!press) {
+    let h = null, cur = '';
+    if (focused) { const p = pick(focusMeshes(focused)); if (p) cur = focused.cursorAt?.(p.hit) || 'grab'; }
+    else if (!bagOpen) { const p = pick(pickables); if (p) { h = p.item; cur = 'grab'; } }
+    if (h !== hovered) {
+      hovered = h;
+      tip.style.opacity = h && h.label ? 1 : 0; if (h?.label) tip.textContent = h.label;
+      if (h?.focusable && t - lastHoverSfx > .25) { sfx('hover'); lastHoverSfx = t; }
+    }
+    fx.style.cursor = cur;
+  }
+
+  // camera
+  const goal = focused ? tmp.set(home.center.x, home.center.y, home.z) : tmp.set(home.center.x + mouse.x * .45, home.center.y + mouse.y * .3, home.z);
+  camera.position.lerp(goal, 1 - Math.exp(-(t - introT0 < 4 ? .9 : 2) * dt));
+  curLook.lerp(home.center, 1 - Math.exp(-2 * dt)); camera.lookAt(curLook);
+  camera.getWorldDirection(dir); up.set(0, 1, 0).applyQuaternion(camera.quaternion); right.set(1, 0, 0).applyQuaternion(camera.quaternion);
+  // the tiles are locked to the screen: the camera's parallax / intro zoom moves only the objects, never the background
+  const bgDist = home.z - BACKDROP.z;
+  for (const p of [tilesLight, tilesDark, studioLight, studioDark]) { p.position.copy(camera.position).addScaledVector(dir, bgDist + (p === tilesDark || p === studioDark ? -.002 : 0)); p.quaternion.copy(camera.quaternion); }
+  spot.position.copy(camera.position).addScaledVector(up, 3.5).addScaledVector(dir, 1);
+  spot.target.position.copy(camera.position).addScaledVector(dir, bgDist).addScaledVector(up, .6);
+  const viewW = 2 * tanH() * SHOW_D * camera.aspect, viewH = 2 * tanH() * SHOW_D;
+
+  for (const it of items) {
+    if (it.id.startsWith('deco')) it.group.visible = look !== 'studio';   // studio look: no cartoon confetti
+    const ph = it.phase;
+    const ik = reduced ? 1 : clamp((t - introT0 - it.delay) / (it === bag ? 2.8 : 1.6), 0, 1), ie = easeOut(ik);
+    hf.copy(it.home).add(tmp.set(Math.sin(t * .16 + ph) * .22, Math.sin(t * .2 + ph * 1.7) * .28, Math.sin(t * .12 + ph * .6) * .18).multiplyScalar(reduced ? .2 : 1));
+    // intro: the bag rises in, then everything else tumbles out of its opening on a little arc
+    let introS = 1, tumble = 0;
+    if (it === bag) hf.y -= (1 - ie) * 1.3;
+    else if (ik < 1) {
+      mouth.copy(bag.group.position).add(MOUTH);
+      hf.lerpVectors(mouth, hf, ie); hf.y += 4 * ie * (1 - ie) * 1.6;
+      introS = ik > 0 ? .15 + .85 * ie : .001;
+      tumble = (1 - ie) * (ph % 2 > 1 ? 3 : -3);
+    }
+
+    // spring physics: dragged items follow the pointer with resistance, released ones drift home
+    if (drag && drag.item === it) {
+      tmp.copy(drag.target).sub(hf); const L = tmp.length();
+      if (L > 1e-4) tmp.multiplyScalar(MAXR * Math.tanh(L / MAXR) / L);
+      acc.copy(tmp).sub(it.off).multiplyScalar(14 / it.mass).addScaledVector(it.vel, -6.5);
+    } else {
+      acc.copy(it.off).multiplyScalar(-1 / it.mass).addScaledVector(it.vel, -1.4);
+    }
+    it.vel.addScaledVector(acc, dt); it.off.addScaledVector(it.vel, dt);
+    it.tilt.lerp(tmp.set(-it.vel.y * .12, it.vel.x * .08, -it.vel.x * .12), 1 - Math.exp(-4 * dt));
+    pos.copy(hf).add(it.off);
+    eul.set(it.homeRot.x + Math.sin(t * .1 + ph) * .14 + it.tilt.x + tumble * .6, it.homeRot.y + Math.sin(t * .08 + ph * 1.3) * .2 + it.tilt.y, it.homeRot.z + Math.sin(t * .07 + ph * .4) * .08 + it.tilt.z + tumble);
+    qa.setFromEuler(eul);
+
+    it.hoverW += ((it === hovered ? 1 : 0) - it.hoverW) * (1 - Math.exp(-8 * dt));
+    let glow = it.focusable || it.toggle || it.note || it.id === 'bag' ? it.hoverW * (1 - it.focusW) : it.hoverW * .6;
+    // the USB stick breathes softly until the visitor has opened it once — "this is where the work is"
+    if (it === usb && !workSeen && !focused && ie > .99) glow = Math.max(glow, (.5 - .5 * Math.cos((t - introT0) * 2.4)) * .85);
+    setGlow(it, glow);
+    it.focusW = approach(it.focusW, it === focused ? 1 : 0, dt / .9);
+    const w = easeInOut(it.focusW);
+    let s = it.scale * introS * (1 + .05 * it.hoverW);
+    if (w > 0) {
+      if (!(press && press.mode === 'spin')) {
+        if (it.cardSpin) {   // settle on whichever side faces you, don't spring back
+          const k = 1 - Math.exp(-5 * dt);
+          it.spin.y += (Math.round(it.spin.y / Math.PI) * Math.PI - it.spin.y) * k; it.spin.x *= 1 - k;
+        } else it.spin.multiplyScalar(Math.exp(-.7 * dt));
+      }
+      const sx = portrait ? 0 : it.showX * viewW, lift = portrait && it.panel ? viewH * .27 : it.showLift;
+      sp.copy(camera.position).addScaledVector(dir, SHOW_D).addScaledVector(up, lift + (it === focused ? it.scrollY || 0 : 0)).addScaledVector(right, sx);
+      const sway = it.still ? 0 : 1;   // reading items stay perfectly still
+      e2.set(it.showRot[0] + it.spin.x + Math.sin(t * .5) * .04 * sway, it.showRot[1] + it.spin.y + Math.sin(t * .4) * .07 * sway, it.showRot[2]);
+      qb.copy(camera.quaternion).multiply(q2.setFromEuler(e2));
+      pos.lerp(sp, w); qa.slerp(qb, w); s = THREE.MathUtils.lerp(s, it.showScale * fitK() * (portrait && it.panel ? .7 : 1), w);
+    }
+    it.group.position.copy(pos); it.group.quaternion.copy(qa); it.group.scale.setScalar(s);
+    setLayer(it, it === focused || it.focusW > .01 ? 1 : 0);
+    it.update?.(dt, t);
+  }
+
+  // light / dark: dim and cool the scene lights to match the background
+  themeW = approach(themeW, theme === 'dark' ? 1 : 0, dt / 1.1);
+  const tw = easeInOut(themeW);
+  lights[0].intensity = THREE.MathUtils.lerp(1.1, .55, tw); lights[1].intensity = THREE.MathUtils.lerp(1.8, 1.35, tw); lights[2].intensity = THREE.MathUtils.lerp(.9, 1.3, tw);
+  lights[0].groundColor.setHex(0xd8a9c2).lerp(DARK_GROUND, tw);
+  scene.environmentIntensity = THREE.MathUtils.lerp(1, .6, tw);
+  const studio = look === 'studio';
+  tilesDark.material.opacity = tw; tilesDark.visible = !studio && tw > .001; tilesLight.visible = !studio && tw < .999;   // cross-fade light ↔ dark surface
+  studioDark.material.opacity = tw; studioDark.visible = studio && tw > .001; studioLight.visible = studio && tw < .999;
+  if (studio) {   // studio: calmer, less pink fill; the spot does the shaping
+    // dark mode gets less fill and a stronger spot, so the falloff to the edges reads as clearly as in light mode
+    lights[0].intensity *= THREE.MathUtils.lerp(.55, .3, tw); lights[1].intensity *= THREE.MathUtils.lerp(.75, .6, tw); lights[2].intensity *= THREE.MathUtils.lerp(.6, .45, tw);
+    lights[0].color.setHex(0xfff7f2);
+    spot.intensity = THREE.MathUtils.lerp(2.3, 4.2, tw); spot.angle = THREE.MathUtils.lerp(.62, .5, tw); spot.color.setHex(0xfff4ee).lerp(SPOT_DARK, tw);
+  } else { lights[0].color.setHex(0xfff2f7); spot.intensity = 0; }
+
+  // render: everything blurred behind, the picked item sharp on top
+  scene.environment = envMain; camera.layers.set(0); mainR.render(scene, camera);
+  scene.environment = envFx; camera.layers.set(1); fxR.render(scene, camera);
+  if (fakeDt === undefined) requestAnimationFrame(frame);
+}
+
+/* toast (used for the bag's credit) */
+const toastEl = document.getElementById('toast'); let toastTimer = null;
+function toast(html, ms = 6000) { toastEl.innerHTML = html; toastEl.classList.add('on'); clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove('on'), ms); }
+
+/* ---------- the bag: "contents" — a list of everything in it, each one opens from here */
+const BAG_LIST = [   // [item id, what it is, (label, credit ids) for rows that aren't openable objects] — each row carries its own small credit line
+  ['card', 'Business card'], ['id', 'ID card'], ['usb', 'USB stick'], ['receipt', 'Receipt'],
+  ['walkman', 'Walkman'], ['watch', 'Watch'], ['pen', 'Pen', 'coming soon', ['pen']],['glasses', 'Sunglasses'],
+  ['coins', 'Coins', 'spare change', ['coin1', 'coin2']], ['bag', 'The bag', 'holds it all', ['bag']],
+];
+function bagRow([id, name, label, credits]) {
+  const it = items.find(i => i.id === id);
+  const cr = (credits || [id]).map(creditHTML).filter(Boolean).join('<br>');
+  const crHTML = cr ? `<p class="cr">${cr}</p>` : '';
+  if (label) return `<li><div class="row"><span><b>${esc(name)}</b><span class="lb">${esc(label)}</span></span></div>${crHTML}</li>`;
+  return it ? `<li><button data-open="${id}"><span><b>${esc(name)}</b><span class="lb">${esc(it.label)}</span></span><i aria-hidden="true">→</i></button>${crHTML}</li>` : '';
+}
+const bagPanel = document.getElementById('bag-panel');
+let bagOpen = false;
+function openBag() {
+  if (focused) unfocus(true);
+  bagPanel.innerHTML = `<div class="win"><div class="bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="ttl">CONTENTS</span>
+      <button data-a="bclose" title="Close" aria-label="Close"><svg viewBox="0 0 14 14" aria-hidden="true" style="width:11px;height:11px"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>
+    <ul>${BAG_LIST.map(bagRow).join('')}</ul></div>`;
+  bagPanel.classList.add('on'); bagOpen = true;
+  stageEl.classList.add('dim'); hint.style.opacity = 0; tip.style.opacity = 0; sfx('open');
+  bagPanel.querySelector('[data-open]')?.focus({ preventScroll: true });
+}
+function closeBag(silent) {
+  if (!bagOpen) return;
+  bagOpen = false; bagPanel.classList.remove('on');
+  if (!focused) { stageEl.classList.remove('dim'); hint.style.opacity = 1; }
+  if (!silent) sfx('close');
+}
+bagPanel.addEventListener('click', e => {
+  if (e.target.closest('[data-a=bclose]')) return closeBag();
+  const b = e.target.closest('[data-open]'); if (!b) return;
+  const it = items.find(i => i.id === b.dataset.open);
+  closeBag(true);
+  if (it?.toggle) toggleTheme(); else if (it) focus(it);
+});
+
+/* ================================================================ accessibility
+   A plain-text version of everything (read by screen readers & search engines, shown when you Tab into it),
+   a keyboard menu for the objects, and focus handling for the opened object. */
+mainR.domElement.setAttribute('aria-hidden', 'true');
+fx.setAttribute('aria-hidden', 'true');
+ui.setAttribute('role', 'dialog'); ui.setAttribute('aria-labelledby', 'f-title');
+let lastTrigger = null;
+{
+  const $ = id => document.getElementById(id);
+  $('tv-role').textContent = PROFILE.role; $('tv-bio').textContent = PROFILE.bio;
+  // work: every project from the USB stick
+  $('tv-work').innerHTML = FILES.map(f => f.folder
+    ? `<li>${esc(f.folder)}<ul>${f.items.map(p => `<li><button class="link" data-open="${esc(p.img)}">${esc(p.title)}</button> <span class="meta">— ${esc(p.tag)}</span></li>`).join('')}</ul></li>`
+    : `<li><button class="link" data-open="${esc(f.img)}">${esc(f.title)}</button> <span class="meta">— ${esc(f.tag)}</span></li>`).join('');
+  if ($('tv-note')) $('tv-note').innerHTML =NOTE.lines.filter(Boolean).map(l => `<li>${l.replace(/^\d\.\s*/, '')}</li>`).join('');
+  $('tv-cv').innerHTML = CV.sections.map(s => `<h3>${esc(s.title)}</h3><ul>${s.items.map(e =>
+    `<li>${e.years ? `<span class="meta">${esc(e.years)}</span> ` : ''}<strong>${esc(e.role)}</strong>, ${esc(e.where)}${e.detail ? ` <span class="meta">(${esc(e.detail)})</span>` : ''}</li>`).join('')}</ul>`).join('')
+    + `<h3>Skills</h3><ul>${CV.skills.map(([a, b]) => `<li><strong>${esc(a)}:</strong> ${esc(b)}</li>`).join('')}</ul>`;
+  // email is assembled here at runtime, so it still isn't sitting in the HTML source
+  const mail = document.createElement('a'); mail.href = 'mailto:' + email(); mail.textContent = email();
+  $('tv-contact').append('Email: ', mail);
+  $('tv-socials').innerHTML = PROFILE.socials.filter(s => s.url && s.url !== '#').map(s => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)} — ${esc(s.handle)}</a></li>`).join('');
+  $('tv-credits').innerHTML = Object.keys(CREDIT).filter(k => creditHTML(k) && !/Designed by/.test(CREDIT[k].by)).map(k => `<li>${creditHTML(k)}</li>`).join('');
+  const leaveText = () => { if (document.activeElement && $('text-version').contains(document.activeElement)) document.activeElement.blur(); };
+  $('tv-close').onclick = leaveText;
+  $('tv-work').addEventListener('click', e => {
+    const b = e.target.closest('[data-open]'); if (!b) return;
+    leaveText(); openProject(b.dataset.open);
+  });
+  // keyboard menu of the objects
+  const NAMES = { usb: 'USB stick — my work', card: 'Business card — contact', id: 'ID card — about', receipt: 'Receipt — CV',walkman: 'Walkman — music', watch: 'Watch — the time', glasses: 'Glasses — dark / light mode' };
+  const nav = $('kbd-nav');
+  nav.innerHTML = Object.entries(NAMES).map(([id, n]) => `<button type="button" data-item="${id}">${esc(n)}</button>`).join('') + `<button type="button" data-text>Text version</button>`;
+  nav.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.text !== undefined) { $('text-version').focus(); return; }
+    if (b.dataset.item === 'glasses') { toggleTheme(); return; }
+    lastTrigger = b; focus(items.find(i => i.id === b.dataset.item));
+    setTimeout(() => { if (focused) $('close').focus(); }, 650);
+  });
+}
+// open a project straight from the text version: pick up the USB stick, then open the file
+function openProject(img) {
+  const page = allFiles().find(x => x.img === img)?.href;
+  if (page) { location.href = page; return; }
+  focus(usb);
+  const inFolder = FILES.find(f => f.folder && f.items.some(p => p.img === img));
+  setTimeout(() => { if (focused !== usb) return; deskPath = inFolder ? inFolder.folder : null; renderFiles(side); openFile(side, img); side.querySelector('[data-a=pclose]')?.focus(); }, 800);
+}
+
+/* header */
+document.getElementById('tagline').textContent = 'Portfolio — ' + PROFILE.role;
+document.getElementById('work-btn').onclick = () => focus(usb);
+
+/* loading: reveal the scene only once every model has arrived */
+{
+  const bar = document.querySelector('#loader .bar i'), pct = document.querySelector('#loader .p');
+  const tick = () => {
+    const vals = [...loadState.values()], tot = vals.reduce((s, v) => s + (v.total || 1), 0), got = vals.reduce((s, v) => s + (v.done ? (v.total || 1) : Math.min(v.loaded, v.total || 1)), 0);
+    const p = tot ? got / tot : 0; bar.style.width = (p * 100).toFixed(0) + '%'; pct.textContent = Math.round(p * 100) + '%';
+    if (vals.length && vals.every(v => v.done)) {
+      introT0 = simT;
+      // coming back from a project page (…/#work): reopen the USB stick where you left off
+      let back = null;
+      if (document.documentElement.classList.contains('returning')) try { back = JSON.parse(sessionStorage.getItem('pf-morph')); sessionStorage.removeItem('pf-return'); } catch (e) {}
+      const toWork = location.hash === '#work';
+      if (toWork) history.replaceState(null, '', location.pathname);
+      if (back) land(back);
+      else { hideMorph(); if (toWork) setTimeout(() => focus(usb), 1600); }
+      document.getElementById('loader').classList.add('gone');
+      requestAnimationFrame(() => document.getElementById('veil').classList.add('gone'));
+    } else requestAnimationFrame(tick);
+  };
+  tick();
+}
+clock.start(); requestAnimationFrame(frame);
+window.__pf = { items, camera, pickables, get focused() { return focused; }, focus, unfocus,           // DEBUG — remove before launch
+  advance(sec) { for (let i = 0; i < sec * 30; i++) frame(0, 1 / 30); } };
+</script>
+</body>
+</html>

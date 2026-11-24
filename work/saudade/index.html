@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Saudade — Voula Evangelia</title>
+<meta name="description" content="Saudade — a photoroman by Voula Evangelia. A personal reflection on nostalgia and the wear of time, told through photographs, stop-motion and a poem.">
+<meta property="og:title" content="Saudade — Voula Evangelia">
+<meta property="og:description" content="A photoroman about the summers that are no longer the same.">
+<meta property="og:image" content="img/title.jpg">
+<meta name="theme-color" content="#f2f0ed">
+<script>document.documentElement.classList.add('js'); try { if (localStorage.getItem('pf-theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Mono:wght@400&family=EB+Garamond:ital,wght@0,400;1,400;1,500&family=Manrope:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/waves.jpg">
+<link rel="stylesheet" href="../project.css">
+<style>
+  /* Saudade: the film's cyanotype blue is the accent; the pale cover frame is printed "deeper" in that blue so the title reads */
+  :root { --accent:#1f45b5; --hero-tint:#4a76dc; --film-ratio:4/3; --greek:"EB Garamond","Cormorant Garamond",Georgia,serif; }
+  :root[data-theme="dark"] { --accent:#8fb0ff; }
+  /* the poem: Greek lines with the English underneath */
+  .poem .row .txt .refrain { margin:0 0 20px; font:italic 500 clamp(24px,2.5vw,36px)/1.15 var(--greek); color:var(--accent); }
+  .poem .row .txt .el { margin:0; font:italic 400 clamp(18px,1.75vw,25px)/1.5 var(--greek); }
+  .poem .row .txt .en { margin:22px 0 0; font:400 clamp(13px,1vw,15px)/1.7 var(--sans); color:var(--muted); }
+  .poem .row .txt .en em { font-style:normal; color:var(--accent); }
+  .poem .intro { margin:14px 0 0; max-width:54ch; font:400 clamp(17px,1.5vw,21px)/1.5 var(--serif); color:var(--muted); }
+</style>
+</head>
+<body>
+
+<a class="back" href="../../#work" aria-label="Back to the portfolio">← back</a>
+
+<header class="hero">
+  <img src="img/waves.jpg" alt="Sea foam breaking on a shore, printed in a single cyanotype blue.">
+  <div class="meta l caps">photoroman<br>poem &amp; stop-motion</div>
+  <div class="meta r caps">2025 / short film<br>1′23″</div>
+  <h1>Saudade</h1>
+</header>
+
+<section class="band">
+  <div class="who rv">
+    <b>Voula Evangelia</b>
+    <span class="role">[ concept · photography · poem · voice · sound · edit ]</span>
+    <span class="name">Saudade</span>
+  </div>
+  <div class="txt rv">
+    <!-- translated from the original Greek project text — please review -->
+    <p><b>SAUDADE</b> is a photoroman — a personal reflection on nostalgia and the wear of time. The title comes from the Portuguese word “saudade”: a deep, melancholic longing for something or someone that is missing, a bittersweet sense of absence and remembrance. Through photographs and short stop-motion sequences I record my village, the place where I spent the summers of my childhood, looking in the images for the way the faces, habits and moments that once defined my world have changed.</p>
+    <p><b>How it was made.</b> Every photograph is my own, edited in Photoshop into the film’s single blue. I wrote the poem, recorded it in my own voice and built the sound myself in Audacity and Reaper, then cut everything together in Premiere Pro.</p>
+  </div>
+</section>
+
+<figure class="full"><img src="img/fence.jpg" loading="lazy" alt="A garden fence with pointed posts against bright, sun-washed trees, in pale blue."></figure>
+
+<section class="film" id="film">
+  <p class="caps">the film — 1′23″</p>
+  <div class="player rv">
+    <button type="button" data-yt="IbVk8B3bJ08" data-title="Saudade — film" aria-label="Play the film Saudade (loads from YouTube)">
+      <img src="img/title.jpg" loading="lazy" alt="Title card: Saudade, by Voula Evangelia, white lettering on a mottled blue ground.">
+      <span class="play"><i></i>play the film</span>
+    </button>
+  </div>
+  <a class="yt" href="https://www.youtube.com/watch?v=IbVk8B3bJ08" target="_blank" rel="noopener">or watch on YouTube ↗</a>
+</section>
+
+<section class="poem">
+  <header class="sec">
+    <p class="caps">the poem</p>
+    <!-- translated from the project text — please review -->
+    <p class="intro rv">The poem runs under the images as an inner narration — a confession about everything I will not live again.</p>
+  </header>
+
+  <!-- English lines: working translation, please review -->
+  <div class="row">
+    <figure class="rv"><img src="img/sea-goats.jpg" loading="lazy" alt="Rippling sea water in blue, with a line of the poem as a yellow subtitle."></figure>
+    <div class="txt rv">
+      <span class="n caps">i</span>
+      <p class="refrain" lang="el">Το καλοκαίρι δεν είναι το ίδιο.</p>
+      <p class="el" lang="el">Ίσως φταίνε οι κατσίκες του θείου Ανδρέα<br>ή μάλλον η κατσίκα, γιατί μία έχει απομείνει.<br>Τώρα το κάνει πιο πολύ για το κέφι του,<br>κι ίσως για να ’χει παρέα τα μεσημέρια.</p>
+      <p class="en"><em>Summer isn’t the same.</em><br>Maybe it’s uncle Andreas’s goats —<br>or rather the goat, since only one is left.<br>He keeps her mostly for the joy of it now,<br>and maybe for company in the afternoons.</p>
+    </div>
+  </div>
+
+  <div class="row flip">
+    <figure class="rv"><img src="img/veranda.jpg" loading="lazy" alt="Horizontal bands of a veranda and the horizon beyond it, in blue."></figure>
+    <div class="txt rv">
+      <span class="n caps">ii</span>
+      <p class="el" lang="el">Ίσως γιατί ο παππούς δεν μας πάει πια στο βουνό.<br>Τώρα δεν περνάει ούτε την αυλόπορτα<br>μόνο κοιτάζει τις κορφές απ’ τη βεράντα.</p>
+      <p class="en">Maybe because grandpa no longer takes us up the mountain.<br>Now he doesn’t even pass the garden gate,<br>he only watches the peaks from the veranda.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <figure class="duo rv"><img src="img/chair.jpg" loading="lazy" alt="A hand resting on the back of a white plastic garden chair."><img src="img/crook.jpg" loading="lazy" alt="An arm leaning on a shepherd’s crook among vine leaves."></figure>
+    <div class="txt rv">
+      <span class="n caps">iii</span>
+      <p class="refrain" lang="el">Το καλοκαίρι δεν είναι το ίδιο.</p>
+      <p class="el" lang="el">Ίσως γιατί δεν χωράω στην αγαπημένη μου κούνια,<br>και το δέντρο που τη φιλοξενούσε<br>κόπηκε ένα πρωί.<br>Η γκλίτσα του παππού δεν διώχνει πια φίδια και σαύρες<br>μα τη χρησιμοποιεί για στήριγμα, μην πέσει.</p>
+      <p class="en"><em>Summer isn’t the same.</em><br>Maybe because I no longer fit in my favourite swing,<br>and the tree that held it<br>was cut down one morning.<br>Grandpa’s crook no longer chases off snakes and lizards —<br>he leans on it now, so he won’t fall.</p>
+    </div>
+  </div>
+
+  <div class="row flip">
+    <figure class="rv"><img src="img/ball.jpg" loading="lazy" alt="A ball in the grass beside the wheels of a bicycle."></figure>
+    <div class="txt rv">
+      <span class="n caps">iv</span>
+      <p class="refrain" lang="el">Το καλοκαίρι δεν είναι το ίδιο.</p>
+      <p class="el" lang="el">Ίσως φταίει ο δρόμος για τη θάλασσα,<br>που δεν μου είναι πια άγνωστος.</p>
+      <p class="en"><em>Summer isn’t the same.</em><br>Maybe it’s the road to the sea,<br>no longer unknown to me.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <figure class="duo rv"><img src="img/portrait.jpg" loading="lazy" alt="An old framed studio portrait of a young couple."><img src="img/boat.jpg" loading="lazy" alt="An inflatable boat left on the grass in a garden."></figure>
+    <div class="txt rv">
+      <span class="n caps">v</span>
+      <p class="refrain" lang="el">Το καλοκαίρι δεν είναι το ίδιο.</p>
+      <p class="el" lang="el">Η γιαγιά κι ο παππούς δεν μας πάνε πια στο χωριό,<br>αλλά βρίσκονται στο πίσω κάθισμα.</p>
+      <p class="en"><em>Summer isn’t the same.</em><br>Grandma and grandpa no longer drive us to the village;<br>they sit in the back seat now.</p>
+    </div>
+  </div>
+
+  <div class="row flip">
+    <figure class="duo rv"><img src="img/mountain.jpg" loading="lazy" alt="A mountain peak dissolving into pale light."><img src="img/clouds.jpg" loading="lazy" alt="Clouds in a blue sky, with the last line of the poem."></figure>
+    <div class="txt rv">
+      <span class="n caps">vi</span>
+      <p class="refrain" lang="el">Το καλοκαίρι δεν είναι το ίδιο.</p>
+      <p class="el" lang="el">Κι όμως, κάθε χρόνο,<br>όταν πέσει το φως πάνω στα χωράφια,<br>νομίζω πως για λίγο<br>ξαναγίνεται.</p>
+      <p class="en"><em>Summer isn’t the same.</em><br>And yet, every year,<br>when the light falls on the fields,<br>I think that, for a moment,<br>it is again.</p>
+    </div>
+  </div>
+</section>
+
+<section class="notes">
+  <dl class="facts">
+    <div><dt>Year</dt><dd>2025</dd></div>
+    <div><dt>Format</dt><dd>Photoroman · 1′23″ · 4:3</dd></div>
+    <div><dt>Context</dt><dd>MA Digital Art Forms, Athens School of Fine Arts — Cinema II</dd></div>
+    <div><dt>My role</dt><dd>Concept, photography, poem &amp; voice, sound design, edit</dd></div>
+    <div class="tools"><dt>Tools</dt><dd><span>Canon EOS M200</span><span>Photoshop</span><span>Premiere Pro</span><span>Audacity</span><span>Reaper</span></dd></div>
+  </dl>
+</section>
+
+<footer class="end">
+  <img src="img/waves.jpg" loading="lazy" alt="">
+  <div class="links">
+    <a href="../../#work">← back to my work</a>
+    <a href="#film">watch the film again ↑</a>
+    <a class="next" href="../pursuit-of-the-ideal/" data-file="pursuit_of_the_ideal.mp4" data-img="pursuit">next project — The Pursuit of the Ideal →</a>
+  </div>
+</footer>
+
+<script src="../project.js" defer></script>
+</body>
+</html>

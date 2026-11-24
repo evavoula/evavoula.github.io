@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Elysium — Voula Evangelia</title>
+<meta name="description" content="Elysium — an experiential spatial installation that builds awareness of violence against women. Ten underground rooms in a cliff on Folegandros, walked as victim or as perpetrator. Diploma thesis by Voula Evangelia and Anastasia Koukopoulou.">
+<meta property="og:title" content="Elysium — Voula Evangelia">
+<meta property="og:description" content="Ten rooms under a cliff. You enter as victim or as perpetrator — and the roles are reversed.">
+<meta property="og:image" content="img/hero.jpg">
+<meta name="theme-color" content="#f2f0ed">
+<script>document.documentElement.classList.add('js'); try { if (localStorage.getItem('pf-theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Mono:wght@400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/hero.jpg">
+<link rel="stylesheet" href="../project.css">
+<style>
+  /* Elysium: the coral of the thesis drawings is the accent */
+  :root { --accent:#cf5232; --title-size:clamp(96px,22vw,470px); --title-size-m:27vw; }
+  :root[data-theme="dark"] { --accent:#f08a66; }
+
+  /* the problem, in three numbers */
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(24px,4vw,64px); padding:clamp(36px,5vw,72px) var(--pad) 0; margin:0; }
+  .stats div { border-top:1px solid var(--line); padding-top:18px; }
+  .stats dt { font:italic 500 clamp(54px,7vw,112px)/.95 var(--serif); color:var(--accent); }
+  .stats dd { margin:12px 0 0; font:400 clamp(14px,1.1vw,16px)/1.55 var(--sans); max-width:34ch; }
+  .stats small { display:block; margin-top:8px; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  .lede { padding:clamp(28px,4vw,56px) var(--pad) 0; margin:0; font:400 clamp(15px,1.25vw,18px)/1.65 var(--sans); max-width:72ch; }
+
+  /* how it works */
+  .steps { margin:18px 0 0; padding:0; list-style:none; counter-reset:s; }
+  .steps li { position:relative; padding:0 0 16px 34px; font:400 clamp(14px,1.1vw,16px)/1.6 var(--sans); max-width:54ch; }
+  .steps li::before { counter-increment:s; content:counter(s, upper-roman); position:absolute; left:0; top:2px; font:italic 500 18px/1 var(--serif); color:var(--accent); }
+  .steps b { font-weight:600; }
+
+  /* the ten rooms, as an index */
+  .rooms { margin:0; padding:clamp(28px,4vw,56px) var(--pad) 0; list-style:none; display:grid; grid-template-columns:repeat(5,1fr); gap:0 clamp(16px,2vw,32px); }
+  .rooms li { border-top:1px solid var(--line); padding:12px 0 16px; font:400 13px/1.35 var(--sans); }
+  .rooms li a { color:inherit; text-decoration:none; }
+  .rooms li a:hover { color:var(--accent); }
+  .rooms i { display:block; margin-bottom:4px; font:italic 500 22px/1 var(--serif); color:var(--accent); }
+  .rooms small { display:block; margin-top:3px; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+
+  .legend { display:flex; flex-wrap:wrap; gap:6px 18px; margin:6px 0 0; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+  .legend span::before { content:""; display:inline-block; width:18px; height:3px; margin-right:7px; vertical-align:middle; background:var(--c); }
+  .row .txt .who-sees { font-size:12.5px; color:var(--muted); }
+
+  /* loops: a duo can open with a film, and loops in the grid keep their 16:9 so captions sit under them */
+  .row figure.duo video { width:100%; max-height:none; }
+  .row figure.duo video + img { position:absolute; right:-5%; bottom:0; width:40%; border:8px solid var(--bg); }
+  .grid figure video { height:auto; aspect-ratio:16/9; }
+
+  @media (max-width:860px) {
+    .row figure.duo video + img { position:static; width:62%; margin:10px 0 0 auto; border:0; }
+    .stats { grid-template-columns:1fr; }
+    .rooms { grid-template-columns:repeat(2,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<a class="back" href="../../#work" aria-label="Back to the portfolio">← back</a>
+
+<header class="hero">
+  <img src="img/hero.jpg" alt="A sunlit, rocky hillside on Folegandros; a small dark entrance block sits alone on the slope.">
+  <div class="meta l caps">experiential spatial installation<br>diploma thesis in architecture</div>
+  <div class="meta r caps">2024<br>folegandros, greece</div>
+  <h1>Elysium</h1>
+</header>
+
+<section class="band">
+  <div class="who rv">
+    <b>Voula Evangelia</b>
+    <span class="role">[ concept · spatial composition · 3d model · unreal engine renders · film edit · sound ]</span>
+    <span class="name">Elysium</span>
+  </div>
+  <div class="txt rv">
+    <!-- based on the thesis text and presentation — please review -->
+    <p><b>ELYSIUM</b> is an experiential spatial installation that builds awareness of violence against women. It is not a building to look at, but a route you walk through: ten underground rooms, each one a form of abuse that most women will recognise — from an unwanted look to an unwanted touch.</p>
+    <p>It speaks to men and women alike, and takes apart the idea that gender-based violence is “a women’s issue”. It addresses victims, to help them speak, and perpetrators, to help them recognise what they do.</p>
+    <p><b>The twist:</b> every visitor walks it in a role — as a victim or as a perpetrator — and the roles are reversed.</p>
+  </div>
+</section>
+
+<section class="film" id="film">
+  <p class="caps">the walkthrough — 8′04″</p>
+  <div class="player rv">
+    <button type="button" data-yt="p4rtUPqfHGw" data-title="Elysium — walkthrough film" aria-label="Play the Elysium walkthrough film (loads from YouTube)">
+      <img src="img/poster.jpg" loading="lazy" alt="Still: a silhouette walking between bands of white light in a black corridor.">
+      <span class="play"><i></i>play the walkthrough</span>
+    </button>
+  </div>
+  <a class="yt" href="https://youtu.be/p4rtUPqfHGw" target="_blank" rel="noopener">or watch on YouTube ↗</a>
+</section>
+
+<!-- ───────── why ───────── -->
+<header class="sec">
+  <p class="caps">why</p>
+  <h2 class="rv">A violence that stays out of sight</h2>
+</header>
+
+<p class="lede rv">Gender-based violence is so widespread that, if every woman reported it, the police could not handle the cases. Elysium was made in response to that rise — and to the indifference that surrounds it.</p>
+
+<dl class="stats">
+  <div class="rv"><dt>23</dt><dd>femicides in Greece in 2021 — almost three times as many as the year before.<small>source: Hellenic Police, via MIIR</small></dd></div>
+  <div class="rv"><dt>~48,000</dt><dd>domestic-violence crimes reported in Greece between 2010 and 2021 — more every single year.<small>source: Hellenic Police, via MIIR</small></dd></div>
+  <div class="rv"><dt>×4</dt><dd>reports of physical violence against women in Greece, from 2019 to 2022.<small>source: EIGE, MIIR, EDJNET</small></dd></div>
+</dl>
+
+<!-- ───────── where ───────── -->
+<header class="sec">
+  <p class="caps">where</p>
+  <h2 class="rv">Inside a cliff on Folegandros</h2>
+</header>
+
+<div class="row">
+  <figure class="rv"><img src="img/site-model.jpg" loading="lazy" alt="Aerial render of a rocky headland over the sea, with the installation’s rooms and corridors drawn as a pale model sunk into the rock."></figure>
+  <div class="txt rv">
+    <span class="n caps">the site</span>
+    <h3>Hidden, like the abuse itself</h3>
+    <p>The installation sits inside a cliff near Lygaria beach, on the Cycladic island of Folegandros. The site was chosen on purpose: almost everything happens underground, out of sight — the way most of the abuse women live through stays hidden.</p>
+    <p>From the surface you only see a few soft, egg-like openings in the rock, and a small block where visitors come back up into the light.</p>
+  </div>
+</div>
+
+<section class="grid" aria-label="The site">
+  <figure class="w7 rv"><img src="img/dome.jpg" loading="lazy" alt="The egg-shaped entrance dome, sunk into the rock, the sea behind it."></figure>
+  <figure class="w5 rv"><img src="img/dome-sea.jpg" loading="lazy" alt="The dome seen low through dry grass, the Aegean on the horizon."></figure>
+</section>
+
+<!-- ───────── how it works ───────── -->
+<header class="sec">
+  <p class="caps">how it works</p>
+  <h2 class="rv">Two roles, one route, ten rooms</h2>
+</header>
+
+<div class="row flip">
+  <figure class="rv"><img src="img/route-axo.jpg" loading="lazy" alt="Axonometric diagram of the route: an egg-shaped opening room, corridors and a sequence of rooms linked in a loop."></figure>
+  <div class="txt rv">
+    <span class="n caps">the rules of the visit</span>
+    <!-- mechanics as described by the author — please review -->
+    <ol class="steps">
+      <li><b>A role at the door.</b> Visitors are split into victims and perpetrators — and the roles are reversed: men mostly enter as victims, since in a patriarchal world it is usually women who are. Anyone who says they have lived through abuse is not made to relive it.</li>
+      <li><b>Two sides of every room.</b> The rooms are built twice over: one side for the victims, one for the perpetrators. They walk the same route, on different paths.</li>
+      <li><b>Points.</b> Perpetrators earn points in every room, depending on how hard they make the victim’s experience. Some go all in; others step back, refuse, and simply watch.</li>
+      <li><b>Two doors.</b> At the end, after the two groups meet, the points decide. Under 200, the blue door leads out into the open air. Over 200, the red door takes you back to the start, to walk it all again — this time as the victim. Empathy is not explained; it is lived.</li>
+    </ol>
+  </div>
+</div>
+
+<ol class="rooms" aria-label="The ten rooms">
+  <li><a href="#r1"><i>01</i>Opening room</a></li>
+  <li><a href="#r2"><i>02</i>Unwanted attention</a></li>
+  <li><a href="#r3"><i>03</i>Catcalling<small>passage</small></a></li>
+  <li><a href="#r4"><i>04</i>Walking alone during night</a></li>
+  <li><a href="#r5"><i>05</i>Spiked and drugged drinks</a></li>
+  <li><a href="#r6"><i>06</i>Unwanted touch</a></li>
+  <li><a href="#r7"><i>07</i>Targeting of victims</a></li>
+  <li><a href="#r8"><i>08</i>Loss of self sense</a></li>
+  <li><a href="#r9"><i>09</i>Solitude</a></li>
+  <li><a href="#r10"><i>10</i>Calling for help<small>art installation</small></a></li>
+</ol>
+
+<!-- ───────── the rooms ───────── -->
+<header class="sec">
+  <p class="caps">the rooms</p>
+  <h2 class="rv">Ten rooms, ten forms of abuse</h2>
+</header>
+<!-- one or two sentences per room, written from the renders and the presentation — please review -->
+
+<div class="row" id="r1">
+  <figure class="duo rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-opening.jpg" src="img/loop-opening.mp4" aria-label="Walkthrough: looking up inside the dome as the light of the oculus opens to the sky."></video><img src="img/r1-banner.jpg" loading="lazy" alt="Inside the dome, a protest banner reading ‘femicide’ in Greek hangs on the curved wall."></figure>
+  <div class="txt rv">
+    <span class="n caps">01 — opening room</span>
+    <h3>Everyone starts together</h3>
+    <p>Inside the egg-shaped dome, under a single opening to the sky, among the banners of protests against femicide. This is the last moment everyone shares the same space — before the roles are handed out.</p>
+  </div>
+</div>
+
+<div class="row flip" id="r2">
+  <figure class="rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-screens.jpg" src="img/loop-screens.mp4" aria-label="Walkthrough: entering a tunnel lined floor to ceiling with screens showing news reports."></video></figure>
+  <div class="txt rv">
+    <span class="n caps">02 — unwanted attention</span>
+    <h3>Being watched</h3>
+    <p>A tunnel of screens playing news reports leads into a room of giant eyes that follow every move. Each perpetrator sits inside one of the eyes — a capsule they steer to keep a victim in sight. The longer they watch, the more points they score; a button opens and shuts the eye.</p>
+  </div>
+</div>
+
+<section class="grid" aria-label="Unwanted attention">
+  <figure class="w6 rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-eyes-victims.jpg" src="img/loop-eyes-victims.mp4" aria-label="Animation: walking between hundreds of giant eyes that turn to follow."></video><figcaption>victims’ side — the eyes follow you</figcaption></figure>
+  <figure class="w6 rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-eye-capsule.jpg" src="img/loop-eye-capsule.mp4" aria-label="Animation: inside the perpetrator’s capsule, the round window turns across the room of eyes."></video><figcaption>perpetrators’ side — steering the eye</figcaption></figure>
+</section>
+
+<div class="row" id="r3">
+  <figure class="rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-catcalling.jpg" src="img/loop-catcalling.mp4" aria-label="Walkthrough: a narrow passage between angled panels; huge faces lean in and speak."></video></figure>
+  <div class="txt rv">
+    <span class="n caps">03 — catcalling · passage</span>
+    <h3>Faces that speak to you</h3>
+    <p>A narrow passage between angled panels. Huge faces lean in from both sides and speak as you squeeze through — there is no way to walk past them without hearing.</p>
+  </div>
+</div>
+
+<div class="row flip" id="r4">
+  <figure class="rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-night.jpg" src="img/loop-night.mp4" aria-label="Walkthrough: moving down a long, dark corridor as thin red lines light up one after another."></video></figure>
+  <div class="txt rv">
+    <span class="n caps">04 — walking alone during night</span>
+    <h3>The way home</h3>
+    <p>A long corridor in the dark, lit only by thin red lines, walls on either side. It is the street at night, the walk that feels longer than it is. After it, the victims reach a small red lounge — the first place they meet each other.</p>
+  </div>
+</div>
+
+<section class="grid" aria-label="Walking alone during night">
+  <figure class="w6 rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-walking-perps.jpg" src="img/loop-walking-perps.mp4" aria-label="Animation: a red-lit gallery of arcade screens beside the corridor."></video><figcaption>perpetrators’ side — the arcade beside the corridor</figcaption></figure>
+  <figure class="w6 rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-lounge.jpg" src="img/loop-lounge.mp4" aria-label="Walkthrough: turning into the red lounge with its low red sofas."></video><figcaption>the red lounge — victims meet</figcaption></figure>
+</section>
+
+<div class="row" id="r5">
+  <figure class="rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-spiked-victims.jpg" src="img/loop-spiked-victims.mp4" aria-label="Animation: figures cross a vast dark hall on a grid floor; a tile glows red."></video></figure>
+  <div class="txt rv">
+    <span class="n caps">05 — spiked and drugged drinks</span>
+    <h3>Losing your footing</h3>
+    <p>A vast, almost black hall where distance and direction stop making sense — the disorientation of a drink you did not know had been spiked.</p>
+  </div>
+</div>
+
+<section class="grid" aria-label="Spiked and drugged drinks">
+  <figure class="w6 rv"><img src="img/r5-drinks.jpg" loading="lazy" alt="A vast, almost black hall; two small figures stand far apart on a faint grid floor."><figcaption>victims’ side</figcaption></figure>
+  <figure class="w6 rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-spiked-perps.jpg" src="img/loop-spiked-perps.mp4" aria-label="Animation: the same dark hall seen from the perpetrators’ side, a line of light tiles across the floor."></video><figcaption>perpetrators’ side</figcaption></figure>
+</section>
+
+<div class="row flip" id="r6">
+  <figure class="rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-touch.jpg" src="img/loop-touch.mp4" aria-label="Walkthrough: a narrow white corridor; hands push through the soft walls on both sides."></video></figure>
+  <div class="txt rv">
+    <span class="n caps">06 — unwanted touch</span>
+    <h3>Nowhere to step aside</h3>
+    <p>A narrow corridor with soft, elastic walls. From the other side, hands press through towards you, and the passage is too tight to avoid them.</p>
+  </div>
+</div>
+
+<div class="row" id="r7">
+  <figure class="duo rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-target-perps.jpg" src="img/loop-target-perps.mp4" aria-label="Animation: perpetrators at glowing consoles in a dark room choose a target."></video><img src="img/r7-target.jpg" loading="lazy" alt="A single figure stands in a cone of white light in a completely dark room."></figure>
+  <div class="txt rv">
+    <span class="n caps">07 — targeting of victims</span>
+    <h3>Chosen</h3>
+    <p>Darkness, and one cone of light. From their consoles, the perpetrators decide who stands in it.</p>
+  </div>
+</div>
+
+<div class="row flip" id="r8">
+  <figure class="rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-self.jpg" src="img/loop-self.mp4" aria-label="Walkthrough: a curved white room of life-size photographs; dark silhouettes walk among them, ‘3 votes’ printed on a body."></video></figure>
+  <div class="txt rv">
+    <span class="n caps">08 — loss of self sense</span>
+    <h3>On display</h3>
+    <p>A white, spiralling room lined with life-size photographs of bodies — looked at, judged, voted on. You keep walking in circles, with less and less of yourself.</p>
+  </div>
+</div>
+
+<div class="row" id="r9">
+  <figure class="rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-solitude.jpg" src="img/loop-solitude.mp4" aria-label="Walkthrough: climbing down a ladder inside a bright blue tube."></video></figure>
+  <div class="txt rv">
+    <span class="n caps">09 — solitude</span>
+    <h3>Down, alone</h3>
+    <p>Stairs, then a ladder inside a blue tube, down into a round, blue void. No one else is there.</p>
+  </div>
+</div>
+
+<section class="grid" aria-label="Loss of self sense and solitude">
+  <figure class="w6 rv"><img src="img/r8-self.jpg" loading="lazy" alt="A life-size photograph of a young man on a white wall, a dark silhouette standing in front of it."></figure>
+  <figure class="w6 rv"><img src="img/r9-blue.jpg" loading="lazy" alt="A deep blue round chamber; a ladder cage hangs into it from an opening above."></figure>
+</section>
+
+<div class="row flip" id="r10">
+  <figure class="rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-domino.jpg" src="img/loop-domino.mp4" aria-label="Walkthrough: a grey hall of tall standing slabs like dominoes; a figure walks among them."></video></figure>
+  <div class="txt rv">
+    <span class="n caps">10 — calling for help · art installation</span>
+    <h3>The first domino</h3>
+    <p>Victims and perpetrators finally meet, after the roles are revealed. Tall slabs stand like dominoes — the first step is awareness, and one falling slab moves the next. On the walls, red telephones play recorded calls for help.</p>
+  </div>
+</div>
+
+<div class="row" id="doors">
+  <figure class="rv"><video data-loop muted playsinline loop preload="none" poster="img/loop-red-door.jpg" src="img/loop-red-door.mp4" aria-label="Walkthrough: two lit doorways, red ‘more than 200’ and blue ‘less than 200’; the camera goes through the red one into a red lift."></video></figure>
+  <div class="txt rv">
+    <span class="n caps">the way out</span>
+    <h3>More than 200</h3>
+    <p>Two doors end the route. <i>Less than 200</i> points: the blue door, up into the open air. <i>More than 200</i>: the red door — a lift that takes you back to the start, to walk the whole route again, this time as the victim.</p>
+  </div>
+</div>
+
+<section class="grid" aria-label="The end of the route">
+  <figure class="w7 rv"><img src="img/r10-phone.jpg" loading="lazy" alt="A red telephone on a white shelf in the hall of slabs."></figure>
+  <figure class="w5 rv"><img src="img/resurface.jpg" loading="lazy" alt="Back on the surface: a yellow tube emerges from the rock of the cliff."></figure>
+</section>
+
+<!-- ───────── process ───────── -->
+<header class="sec">
+  <p class="caps">process</p>
+  <h2 class="rv">From a sketch to a route</h2>
+</header>
+
+<div class="row">
+  <figure class="rv"><img src="img/model-map.jpg" loading="lazy" alt="Photo of the study model — crumpled foil rooms linked by wire — annotated with each room’s name, the victims’ path in red, the perpetrators’ path in blue and the rock in yellow."></figure>
+  <div class="txt rv">
+    <span class="n caps">the study model</span>
+    <h3>Two paths through the rock</h3>
+    <p>Before any drawing, a model of foil and wire: each lump a room, each wire a corridor. Drawn over it, the two routes that run through the whole project.</p>
+    <p class="legend"><span style="--c:#e3262d">victims</span><span style="--c:#1f6fe0">perpetrators</span><span style="--c:#f2c200">the rock</span></p>
+  </div>
+</div>
+
+<section class="grid" aria-label="Sketches, model and drawings">
+  <figure class="w8 rv"><img src="img/sketches.jpg" loading="lazy" alt="Concept sketches in coral ink: a figure in a corridor of light, rows of figures, falling dominoes, a room of eyes."></figure>
+  <figure class="w4 rv"><img src="img/model.jpg" loading="lazy" alt="The foil-and-wire study model, toned coral."></figure>
+  <figure class="w4 rv"><img src="img/sketch-attention.jpg" loading="lazy" alt="First sketch of the unwanted attention room: giant eyes around small figures."></figure>
+  <figure class="w4 rv"><img src="img/eyes-diagram.jpg" loading="lazy" alt="Diagram of the eyes: spheres of different sizes that follow a person with the help of a tracker."></figure>
+  <figure class="w4 rv"><img src="img/plan-attention.jpg" loading="lazy" alt="Plan of the unwanted attention room, filled with circles, with the perpetrator’s capsule drawn in detail."></figure>
+  <figure class="w4 rv"><img src="img/r4-axo.jpg" loading="lazy" alt="Axonometric drawing in coral of the walking-alone corridor and, beside it, a dense grid of walls."></figure>
+  <figure class="w4 rv"><img src="img/axo-self.jpg" loading="lazy" alt="Axonometric drawing of the spiralling loss-of-self-sense room."></figure>
+  <figure class="w4 rv"><img src="img/axo-help.jpg" loading="lazy" alt="Axonometric drawing of the calling-for-help hall of slabs, with the first domino sketch."></figure>
+</section>
+
+<!-- ───────── the name ───────── -->
+<div class="row flip">
+  <figure class="rv"><img src="img/naming.jpg" loading="lazy" alt="A classical painting of the Elysian Fields, toned coral."></figure>
+  <div class="txt rv">
+    <span class="n caps">the name</span>
+    <h3>Elysium, as satire</h3>
+    <p>In Greek myth, the Elysian Fields were part of Hades — the final rest of heroes and of the virtuous. Naming a descent through abuse after them is a deliberate, bitter comment.</p>
+    <p>But it is also a promise: the experience is meant to be cathartic. Once you have gained awareness and empathy, you can set out on the path to a more virtuous life.</p>
+  </div>
+</div>
+
+<section class="notes">
+  <dl class="facts">
+    <div><dt>Year</dt><dd>2024</dd></div>
+    <div><dt>Format</dt><dd>Experiential spatial installation · walkthrough film</dd></div>
+    <div><dt>Context</dt><dd>Diploma thesis, School of Architecture</dd></div>
+    <div><dt>Team</dt><dd>Voula Evangelia, Anastasia Koukopoulou</dd></div>
+    <div><dt>My role</dt><dd>Concept and spatial composition (with A. Koukopoulou), 3D model, Unreal Engine renders, film edit, sound design (assembled and edited from sound elements)</dd></div>
+    <div class="tools"><dt>Tools</dt><dd><span>AutoCAD</span><span>Revit</span><span>Unreal Engine</span><span>Photoshop</span><span>Premiere Pro</span></dd></div>
+  </dl>
+  <p class="disclaimer">Architectural drawings by Anastasia Koukopoulou. Statistics as presented in the thesis (Hellenic Police, EIGE, MIIR, EDJNET). An unbuilt proposal.</p>
+</section>
+
+<footer class="end">
+  <img src="img/resurface.jpg" loading="lazy" alt="">
+  <div class="links">
+    <a href="../../#work">← back to my work</a>
+    <a href="#film">watch the walkthrough ↑</a>
+    <a class="next" href="../38780-118/" data-file="38780-118.jpg" data-img="38780-118">next project — 38780-118 →</a>
+  </div>
+</footer>
+
+<script src="../project.js" defer></script>
+</body>
+</html>

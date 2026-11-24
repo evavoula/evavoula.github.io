@@ -1,0 +1,7 @@
+# Not needed for the live site
+*.blend
+*.blend1
+serve.ps1
+prototype/
+# CV stays private (not downloadable from the site)
+files/CV_*.pdf
